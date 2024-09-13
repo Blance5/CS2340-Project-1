@@ -1,0 +1,2 @@
+doango-debug-toolbar
+django-allauth

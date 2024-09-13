@@ -15,8 +15,23 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
+from .views import home_view  # Import the home_view from views.py
+from django.conf import settings
+from django.conf.urls.static import static
+from .views import CustomEmailView
+from .views import CustomLogoutView
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    path('admin/', admin.site.urls),  # Admin panel
+    path('', home_view, name='home'),  # Home page view
+    path('accounts/', include('allauth.urls')),  # Include allauth URLs for authentication
+    path('accounts/email/', CustomEmailView.as_view(), name='account_email'),
+    path('accounts/logout/', CustomLogoutView.as_view(), name='account_logout'),
 ]
+
+if settings.DEBUG:
+    import debug_toolbar
+    urlpatterns = [
+        path('__debug__/', include(debug_toolbar.urls)),
+    ] + urlpatterns

@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 
 from pathlib import Path
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -37,7 +38,43 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'FoodFinder',
+    'django.contrib.sites',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.google',
+    'debug_toolbar',
 ]
+
+SOCIALACCOUNT_PROVIDERS = {
+    'google': {
+        'APP': {
+            'client_id': '',
+            'secret': '',
+            'key': ''
+        }
+    }
+}
+
+# Specify site ID
+SITE_ID = 1
+
+# Configure Allauth settings
+LOGIN_REDIRECT_URL = '/'  # Redirect to home after login
+LOGOUT_REDIRECT_URL = '/'  # Redirect to home after logout
+
+# OAuth credentails
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = ''
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = ''
+
+STATIC_URL = '/static/'
+STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
+
+AUTHENTICATION_BACKENDS = (
+    'django.contrib.auth.backends.ModelBackend',
+    'allauth.account.auth_backends.AuthenticationBackend',
+)
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -47,6 +84,12 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'allauth.account.middleware.AccountMiddleware',
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
+]
+
+INTERNAL_IPS = [
+    '127.0.0.1',
 ]
 
 ROOT_URLCONF = 'FoodFinder.urls'
