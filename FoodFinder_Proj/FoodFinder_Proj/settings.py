@@ -57,6 +57,11 @@ SOCIALACCOUNT_PROVIDERS = {
     }
 }
 
+# foodfinder_project/settings.py
+WSGI_APPLICATION = 'FoodFinder_Proj.wsgi.application'
+ASGI_APPLICATION = 'FoodFinder_Proj.asgi.application'  # If applicable
+
+
 # Specify site ID
 SITE_ID = 1
 
@@ -97,7 +102,7 @@ ROOT_URLCONF = 'FoodFinder.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -110,7 +115,6 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'FoodFinder.wsgi.application'
 
 
 # Database
