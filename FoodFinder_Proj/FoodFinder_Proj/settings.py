@@ -50,8 +50,8 @@ INSTALLED_APPS = [
 SOCIALACCOUNT_PROVIDERS = {
     'google': {
         'APP': {
-            'client_id': '',
-            'secret': '',
+            'client_id': 'HIDDEN',
+            'secret': 'HIDDEN',
             'key': ''
         }
     }
