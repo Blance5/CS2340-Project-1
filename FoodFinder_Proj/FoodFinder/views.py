@@ -15,6 +15,10 @@ from django.contrib.auth.decorators import login_required
 def home_logged_in(request):
     return render(request, 'home_logged_in.html')
 
+@login_required
+def profile_view(request):
+    return render(request, 'profile.html', {'user': request.user})
+
 # View for logged out users
 def home_logged_out(request):
     return render(request, 'home_logged_out.html')
