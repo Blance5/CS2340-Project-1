@@ -18,14 +18,17 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
-from .views import CustomLogoutView, CustomEmailView, home_view
 from django.contrib.auth.views import LogoutView
+from . import views
+from .views import CustomLogoutView
 
 urlpatterns = [
-    path('', home_view, name='home'),  # Home page view
+    path('', views.home_redirect, name='home_redirect'),  # Home page view
+    path('home_logged_in/', views.home_logged_in, name='home_logged_in'),
+    path('home_logged_out/', views.home_logged_out, name='home_logged_out'),
     path('accounts/', include('allauth.urls')),  # Include allauth URLs for authentication
-    path('logout/', LogoutView.as_view(), name='logout'),  # Custom logout view
-    path('email/', CustomEmailView.as_view(), name='account_email'),  # Custom email view
+    path('logout/', CustomLogoutView.as_view(), name='logout'),  # Custom logout view
+    path('accounts/email/', views.CustomEmailView.as_view(), name='account_email'),  # Custom email view
 ]
 
 if settings.DEBUG:

@@ -16,9 +16,9 @@
                 <li><a href="{% url 'home_redirect' %}">Home</a></li>
                 <!-- Add more links as needed -->
                 {% if user.is_authenticated %}
-                    <li><a href="{% url 'account_logout' %}">Log Out</a></li>
+                    {#<li><a href="{% url 'account_logout' %}">Log Out</a></li>#}
                 {% else %}
-                    <li><a href="{% url 'account_login' %}">Log In</a></li>
+                    {#<li><a href="{% url 'account_login' %}">Log In</a></li>#}
                 {% endif %}
             </ul>
         </nav>
