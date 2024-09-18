@@ -20,7 +20,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib.auth.views import LogoutView
 from . import views
-from .views import CustomLogoutView
+from .views import CustomLogoutView, profile_view
 
 urlpatterns = [
     path('', views.home_redirect, name='home_redirect'),  # Home page view
@@ -29,6 +29,8 @@ urlpatterns = [
     path('accounts/', include('allauth.urls')),  # Include allauth URLs for authentication
     path('logout/', CustomLogoutView.as_view(), name='logout'),  # Custom logout view
     path('accounts/email/', views.CustomEmailView.as_view(), name='account_email'),  # Custom email view
+    path('profile/', profile_view, name='profile'),  # Add the profile URL here
+
 ]
 
 if settings.DEBUG:
