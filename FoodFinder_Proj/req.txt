@@ -1,2 +1,2 @@
-doango-debug-toolbar
+django-debug-toolbar
 django-allauth

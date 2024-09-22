@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 
 from pathlib import Path
+from .config import google_client_id, google_secret
 import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -61,8 +62,8 @@ SOCIALACCOUNT_PROVIDERS = {
     'google': {
         'SCOPE': ['profile', 'email'],
         'APP': {
-            'client_id': '',
-            'secret': '',
+            'client_id': google_client_id,
+            'secret': google_secret,
             'key': ''
         }
     }
