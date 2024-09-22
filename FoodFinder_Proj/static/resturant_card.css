@@ -1,0 +1,43 @@
+#results-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    padding: 20px;
+}
+
+.restaurant-card {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    margin: 10px;
+    padding: 20px;
+    width: 300px;
+    transition: transform 0.3s ease;
+}
+
+.restaurant-card:hover {
+    transform: translateY(-5px);
+}
+
+.restaurant-card h3 {
+    color: #333;
+    margin-top: 0;
+}
+
+.restaurant-card p {
+    color: #666;
+    margin: 5px 0;
+}
+
+.restaurant-card p:last-child {
+    margin-bottom: 0;
+}
+
+.restaurant-link {
+    text-decoration: none !important; /* Remove underline */
+    color: inherit; /* Make text color inherit from parent */
+}
+
+.restaurant-link:hover {
+    text-decoration: underline !important; /* Optional: underline on hover for accessibility */
+}

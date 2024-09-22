@@ -1,10 +1,282 @@
-<!-- FoodFinder/templates/home_logged_in.html -->
 {% extends "base.html" %}
 
 {% block title %}Home - FoodFinder{% endblock %}
+
+{% load static%}
+
+{% block css%}
+    <link rel="stylesheet" href="{% static 'home_nav_bar.css' %}">
+    <link rel="stylesheet" href="{% static 'resturant_card.css' %}">
+{% endblock%}
 
 {% block content %}
     <h2>Welcome to FoodFinder!</h2>
     <p>Your destination for finding great food.</p>
     <p>THIS IS THE HOME PAGE FOR BEING LOGGED IN</p>
+
+    <!-- Search bar -->
+    <form id="search-form">
+        <input type="text" id="search-query" placeholder="Search for restaurants..." required>
+        <button type="submit">Search</button>
+    </form>
+
+    <div id="sort-options" style="display: none;">
+        <label for="sort-select">Sort by:</label>
+        <select id="sort-select">
+            <option value="default">Relevance</option>
+            <option value="price">Price (Low to High)</option>
+            <option value="distance">Distance</option>
+            <option value="rating">Rating (High to Low)</option>
+        </select>
+    </div>
+
+    <!-- Output window where search results will be displayed -->
+    <div id="output-window">
+        <ul id="results-list"></ul>
+    </div>
+
+    <script>
+        // Declare global variables
+        let googleMapsApi;
+        let placesService;
+        let currentResults = [];
+        let userPosition;
+
+        function initMap() {
+            console.log("Google Maps API loaded.");
+            googleMapsApi = google;
+            placesService = new google.maps.places.PlacesService(document.createElement('div'));
+            
+            document.getElementById('search-form').addEventListener('submit', function(event) {
+                console.log("Form submitted.");
+                event.preventDefault();
+                const query = document.getElementById('search-query').value;
+                searchRestaurants(query);
+            });
+
+            // Add event listener for sorting
+            document.getElementById('sort-select').addEventListener('change', function() {
+                sortAndDisplayResults(this.value);
+            });
+        }
+
+        function searchRestaurants(query) {
+            console.log("Searching for restaurants:", query);
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(function(position) {
+                    userPosition = position;
+                    const userLocation = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+                    const request = {
+                        location: userLocation,
+                        radius: '5000',
+                        type: ['restaurant'],
+                        keyword: query,
+                        fields: ['name', 'geometry', 'place_id', 'rating', 'user_ratings_total', 'vicinity', 'price_level']
+                    };
+
+                    placesService.nearbySearch(request, function(results, status) {
+                        if (status === google.maps.places.PlacesServiceStatus.OK) {
+                            currentResults = results;
+                            displayResults(results);
+                        } else {
+                            console.log('Search failed:', status);
+                            displayNoResults(status);
+                        }
+                    });
+                }, function(error) {
+                    console.log('Geolocation error:', error);
+                    displayError("Unable to get your location. Please make sure location services are enabled.");
+                });
+            } else {
+                console.log('Geolocation is not supported by this browser.');
+                displayError("Geolocation is not supported by your browser.");
+            }
+        }
+
+        function displayResults(results) {
+            const resultsList = document.getElementById('results-list');
+            resultsList.innerHTML = ''; // Clear previous results
+
+            results.forEach(function(place, index) {
+                const card = document.createElement('div');
+                card.className = 'restaurant-card';
+                card.id = `restaurant-${index}`;
+
+                // Prepare the rating stars
+                const rating = place.rating || 0;
+                const fullStars = Math.floor(rating);
+                const halfStar = rating % 1 >= 0.5 ? 1 : 0;
+                const emptyStars = 5 - fullStars - halfStar;
+
+                const starHTML = '★'.repeat(fullStars) + 
+                                (halfStar ? '½' : '') + 
+                                '☆'.repeat(emptyStars);
+
+                const distance = calculateDistance(place.geometry.location, userPosition);
+                place.distance = distance; // Store distance for sorting
+
+                const websiteUrl = place.website; // Assuming place.website contains the URL
+                console.log("URL" + place.website)
+                
+                const cardContent = `
+                    <h3>${place.name}</h3>
+                    <p>Rating: ${starHTML} (${place.user_ratings_total || 0} reviews)</p>
+                    <p>Address: ${place.vicinity || 'Address not available'}</p>
+                    <p>Distance: ${distance} mi</p>
+                    <p id="open-status-${index}">Checking open status...</p>
+                    ${place.price_level ? `<p>Price Level: ${'$'.repeat(place.price_level)}</p>` : '<p>Price Level: Not available</p>'}
+                `;
+
+                if (websiteUrl) {
+                    const anchor = document.createElement('a');
+                    anchor.href = websiteUrl;
+                    anchor.target = '_blank'; // Open in a new tab
+                    anchor.innerHTML = cardContent;
+                    card.appendChild(anchor);
+                } else {
+                    card.innerHTML = cardContent; // Just set the innerHTML without an anchor
+                }
+
+                resultsList.appendChild(card);
+
+                // Get detailed place information
+                const detailsRequest = {
+                    placeId: place.place_id,
+                    fields: ['opening_hours', 'website']
+                };
+
+                placesService.getDetails(detailsRequest, function(placeDetails, detailStatus) {
+
+                    const websiteUrl = placeDetails.website; // Now you can get the website
+                    console.log("URL" + placeDetails.website)
+                    if (websiteUrl) {
+                        const anchor = document.createElement('a');
+                        anchor.href = websiteUrl;
+                        anchor.target = '_blank'; // Open in a new tab
+                        anchor.className = 'restaurant-link'; // Add a class for styling
+                        anchor.appendChild(card); // Append the card to the anchor
+                        resultsList.appendChild(anchor); // Append the anchor to resultsList
+                    } else {
+                        // If no website, leave the card as it is (non-clickable)
+                        //openStatusElement.textContent = 'Opening hours not available';
+                    }
+                    
+                    const openStatusElement = document.getElementById(`open-status-${index}`);
+                    if (placeDetails.opening_hours) {
+                        const currentDate = new Date();
+                        const currentDay = currentDate.getDay(); // 0 = Sunday, 1 = Monday, etc.
+                        const currentHour = currentDate.getHours();
+                        const currentMinute = currentDate.getMinutes();
+
+                        let isOpenNow = false;
+
+                        
+                    
+                        for (const period of placeDetails.opening_hours.periods) {
+                            if (period.open.day === currentDay) {
+                                console.log(place.name)
+                                console.log(period.open.hours)
+                                console.log(period.open.minutes)
+                                console.log(period.close.hours)
+                                console.log(period.close.minutes)
+                                console.log(currentHour)
+                                console.log(currentMinute)
+                                const openHour = period.open.hours;
+                                const openMinute = period.open.minutes;
+                                let closeHour = period.close.hours;
+                                if (closeHour <= openHour) {
+                                    closeHour += 24;
+                                }
+                                const closeMinute = period.close.minutes;
+                    
+                                const isOpenToday = (
+                                    (currentHour > openHour || (currentHour === openHour && currentMinute >= openMinute)) &&
+                                    (currentHour < closeHour || (currentHour === closeHour && currentMinute < closeMinute))
+                                );
+                    
+                                const isOpenNextDay = (
+                                    currentHour < closeHour && currentHour >= openHour && closeHour < openHour
+                                );
+                    
+                                if (isOpenToday || isOpenNextDay) {
+                                    isOpenNow = true;
+                                    break;
+                                }
+                            }
+                        }
+                    
+                        openStatusElement.textContent = isOpenNow ? 'Open now' : 'Closed';
+                    } else {
+                        openStatusElement.textContent = 'Opening hours not available';
+                    }
+                    
+                });
+            });
+
+            // Show sorting options
+            document.getElementById('sort-options').style.display = 'block';
+        }
+
+        // Returns distance in miles
+        function calculateDistance(placeLocation, userPosition) {
+            if (!google.maps.geometry) {
+                console.error('Geometry library not loaded');
+                return 'N/A';
+            }
+            
+            const userLatLng = new google.maps.LatLng(
+                userPosition.coords.latitude,
+                userPosition.coords.longitude
+            );
+            const distance = google.maps.geometry.spherical.computeDistanceBetween(userLatLng, placeLocation);
+            return (distance / 1000 / 1.609).toFixed(2); // Convert meters to miles and round to 2 decimal places
+        }
+
+        function sortAndDisplayResults(sortBy) {
+            let sortedResults = [...currentResults];
+            switch(sortBy) {
+                case 'price':
+                    sortedResults.sort((a, b) => (a.price_level || 0) - (b.price_level || 0));
+                    break;
+                case 'distance':
+                    sortedResults.sort((a, b) => parseFloat(a.distance) - parseFloat(b.distance));
+                    break;
+                case 'rating':
+                    sortedResults.sort((a, b) => b.rating - a.rating);
+                    break;
+                default:
+                    // Default sorting (e.g., by relevance) is already applied by the API
+                    break;
+            }
+            displayResults(sortedResults);
+        }
+
+        function displayNoResults(status) {
+            const resultsList = document.getElementById('results-list');
+            resultsList.innerHTML = `<p>No restaurants found. (Status: ${status}) - REMOVE IN PROD</p>`;
+            document.getElementById('sort-options').style.display = 'none';
+        }
+
+        function displayError(message) {
+            const resultsList = document.getElementById('results-list');
+            resultsList.innerHTML = `<p>Error: ${message}</p>`;
+            document.getElementById('sort-options').style.display = 'none';
+        }
+
+        // Load the Google Maps API script
+        function loadGoogleMapsApi() {
+            const script = document.createElement('script');
+            script.src = `https://maps.googleapis.com/maps/api/js?key=AIzaSyBcua5llesWmrde4L353gZEGWhAcC3zYOI&libraries=places,geometry&callback=initMap`;
+            script.async = true;
+            script.defer = true;
+            document.head.appendChild(script);
+        }
+
+        // Call loadGoogleMapsApi when the page loads
+        window.onload = loadGoogleMapsApi;
+    </script>
 {% endblock %}
+
+
+
+<!-- https://maps.googleapis.com/maps/api/js?key=AIzaSyBcua5llesWmrde4L353gZEGWhAcC3zYOI&libraries=places&callback=initMap-->
