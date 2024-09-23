@@ -6,7 +6,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}My Django App{% endblock %}</title>
-    <link rel="stylesheet" href="{% static 'styles.css' %}">
+    {% block css%}
+        <link rel="stylesheet" href="{% static 'home_nav_bar.css' %}">
+    {% endblock %}
 </head>
 <body>
     <header>
@@ -16,6 +18,7 @@
                 <li><a href="{% url 'home_redirect' %}">Home</a></li>
                 <!-- Add more links as needed -->
                 {% if user.is_authenticated %}
+                    <li><a href="{% url 'profile' %}">Profile</a></li>
                     <li><a href="{% url 'account_logout' %}">Log Out</a></li>
                 {% else %}
                     <li><a href="{% url 'account_login' %}">Log In</a></li>

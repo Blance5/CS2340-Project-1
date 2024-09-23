@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 
 from pathlib import Path
+from .config import google_client_id, google_secret
 import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -47,20 +48,34 @@ INSTALLED_APPS = [
     'debug_toolbar',
 ]
 
+# Ensure email is required
+ACCOUNT_EMAIL_REQUIRED = True
+
+# Ensure emails are unique
+ACCOUNT_UNIQUE_EMAIL = True
+
+# Ensure email is fetched from the social account
+SOCIALACCOUNT_QUERY_EMAIL = True
+
+
 SOCIALACCOUNT_PROVIDERS = {
     'google': {
+        'SCOPE': ['profile', 'email'],
         'APP': {
-            'client_id': 'HIDDEN',
-            'secret': 'HIDDEN',
+            'client_id': google_client_id,
+            'secret': google_secret,
             'key': ''
         }
     }
 }
 
+
 # foodfinder_project/settings.py
 WSGI_APPLICATION = 'FoodFinder_Proj.wsgi.application'
 ASGI_APPLICATION = 'FoodFinder_Proj.asgi.application'  # If applicable
 
+# Console Email Backend for development
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 # Specify site ID
 SITE_ID = 1
