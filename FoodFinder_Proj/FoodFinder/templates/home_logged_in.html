@@ -50,6 +50,7 @@
                 let placesService;
                 let currentResults = [];
                 let userPosition;
+                let markers = [];
 
                 function initMap() {
                     console.log("Google Maps API loaded.");
@@ -88,6 +89,13 @@
                     window.scrollTo({ top: offsetTop, behavior: 'smooth' });
                 });
                 
+                // Function to clear existing markers
+                function clearMarkers() {
+                    for (let i = 0; i < markers.length; i++) {
+                        markers[i].setMap(null); // Remove marker from the map
+                    }
+                    markers = []; // Reset the markers array
+                }
                 
 
                 function searchRestaurants(query) {
@@ -127,22 +135,11 @@
                     const resultsList = document.getElementById('results-list');
                     resultsList.innerHTML = ''; // Clear previous results
                     map.setCenter({ lat: userPosition.coords.latitude, lng: userPosition.coords.longitude }); // Center map on user location
-                    let markers = []; // Array to store markers
-
-                    function clearMarkers() {
-                        for (let i = 0; i < markers.length; i++) {
-                            markers[i].setMap(null);
-                        }
-                        markers = []; // Clear the markers array
-                    }
-
+                    
                     // Clear map markers
                     clearMarkers();
 
                     
-
-                    
-
 
                     results.forEach(function(place, index) {
                         const card = document.createElement('div');
@@ -167,6 +164,7 @@
                             map: map,
                             title: place.name,
                         });
+                        markers.push(marker);
 
                         // Add click event to marker
                         marker.addListener('click', function() {
@@ -373,5 +371,3 @@
 {% endblock %}
 
 
-
-<!-- https://maps.googleapis.com/maps/api/js?key=AIzaSyBcua5llesWmrde4L353gZEGWhAcC3zYOI&libraries=places&callback=initMap-->
