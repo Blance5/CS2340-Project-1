@@ -1,0 +1,17 @@
+{% load i18n %}
+{% load allauth %}
+{% load socialaccount %}
+{% get_providers as socialaccount_providers %}
+{% if socialaccount_providers %}
+<div class="header-container">
+    {% if not SOCIALACCOUNT_ONLY %}
+        {% element hr %}
+        {% endelement %}
+        {% element h2 %}
+            {% translate "Or continue with" %}
+        {% endelement %}
+    {% endif %}
+    {% include "socialaccount/snippets/provider_list.html" with process="login" %}
+    {% include "socialaccount/snippets/login_extra.html" %}
+</div>
+{% endif %}
