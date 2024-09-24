@@ -46,7 +46,15 @@ nav ul li:hover {
 form li {
     font-size: 14px;
     list-style-type: none;
-   
+}
+
+ul {
+    text-decoration: none;
+    list-style-type: none;
+}
+
+a {
+    text-decoration: none;
 }
 
 nav ul li a {
@@ -63,7 +71,8 @@ nav ul li:active {
 
 
 /* Styling for the text box */
-input[type="text"] {
+input[type="text"],
+input[type="password"] {
     padding: 10px; /* Space inside the text box */
     border: 2px solid #ccc; /* Border color */
     border-radius: 15px; /* Rounded edges */
@@ -73,7 +82,8 @@ input[type="text"] {
 }
 
 /* Focus state for the text box */
-input[type="text"]:focus {
+input[type="text"]:focus,
+input[type="password"]:focus {
     border-color: #4a90e2; /* Border color on focus */
     box-shadow: 0 0 5px rgba(74, 144, 226, 0.5); /* Shadow effect on focus */
     outline: none; /* Remove default outline */
