@@ -168,11 +168,20 @@
 
                         // Add click event to marker
                         marker.addListener('click', function() {
-                            // You can add logic to display details when marker is clicked
+                            // Collapse any open details
+                            document.querySelectorAll('.details').forEach(function(details) {
+                                details.style.display = 'none'; // Collapse all open details
+                            });
+                        
+                            // Scroll to the current restaurant card
+                            const card = document.getElementById(`restaurant-${index}`);
+                            card.scrollIntoView({ behavior: 'smooth', block: 'start' }); // Scroll to the restaurant card
+                        
+                            // Expand the details of the current restaurant
                             const detailsDiv = document.getElementById(`details-${index}`);
                             if (detailsDiv.style.display === 'none') {
-                                detailsDiv.style.display = 'block';
-                                fetchAdditionalDetails(place.place_id, detailsDiv);
+                                detailsDiv.style.display = 'block'; // Show the details
+                                fetchAdditionalDetails(place.place_id, detailsDiv, place.name); // Fetch details if necessary
                             }
                         });
                 
@@ -366,7 +375,7 @@
                 // Load the Google Maps API script
                 function loadGoogleMapsApi() {
                     const script = document.createElement('script');
-                    script.src = 'https://maps.googleapis.com/maps/api/js?key=KEY&libraries=places,geometry&callback=initMap';
+                    script.src = 'https://maps.googleapis.com/maps/api/js?key=AIzaSyBbMTTvhF3t8FS6IwjcIaNvHZq18k9y7sc&libraries=places,geometry&callback=initMap';
                     script.async = true;
                     script.defer = true;
                     document.head.appendChild(script);
