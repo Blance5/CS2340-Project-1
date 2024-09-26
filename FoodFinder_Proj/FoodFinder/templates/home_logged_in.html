@@ -131,16 +131,20 @@
                     }
                 }
 
+                // Declare global variables for icons
+                const defaultMarkerIcon = 'http://maps.google.com/mapfiles/ms/icons/red-dot.png'; // Default red icon
+                const activeMarkerIcon = 'http://maps.google.com/mapfiles/ms/icons/blue-dot.png'; // Blue icon for active marker
+                
+                let activeMarkerIndex = null; // To track the currently active marker
+                
                 function displayResults(results) {
                     const resultsList = document.getElementById('results-list');
                     resultsList.innerHTML = ''; // Clear previous results
                     map.setCenter({ lat: userPosition.coords.latitude, lng: userPosition.coords.longitude }); // Center map on user location
-                    
+                
                     // Clear map markers
                     clearMarkers();
-
-                    
-
+                
                     results.forEach(function(place, index) {
                         const card = document.createElement('div');
                         card.className = 'restaurant-card';
@@ -151,29 +155,42 @@
                         const halfStar = rating % 1 >= 0.5 ? 1 : 0;
                         const emptyStars = 5 - fullStars - halfStar;
                 
-                        const starHTML = '★'.repeat(fullStars) + 
-                                        (halfStar ? '½' : '') + 
-                                        '☆'.repeat(emptyStars);
+                        const starHTML = '★'.repeat(fullStars) +
+                                         (halfStar ? '½' : '') +
+                                         '☆'.repeat(emptyStars);
                 
                         const distance = calculateDistance(place.geometry.location, userPosition);
                         place.distance = distance; // Store distance for sorting
-
+                
                         // Create marker for each restaurant
-                        const marker = new google.maps.Marker({
+                        let marker = new google.maps.Marker({
                             position: place.geometry.location,
                             map: map,
                             title: place.name,
+                            icon: defaultMarkerIcon // Set default red icon
                         });
                         markers.push(marker);
-
+                
                         // Add click event to marker
                         marker.addListener('click', function() {
-                            // You can add logic to display details when marker is clicked
+                            // Collapse any open details
+                            document.querySelectorAll('.details').forEach(function(details) {
+                                details.style.display = 'none'; // Collapse all open details
+                            });
+                
+                            // Scroll to the current restaurant card
+                            const card = document.getElementById(`restaurant-${index}`);
+                            card.scrollIntoView({ behavior: 'smooth', block: 'start' }); // Scroll to the restaurant card
+                
+                            // Expand the details of the current restaurant
                             const detailsDiv = document.getElementById(`details-${index}`);
                             if (detailsDiv.style.display === 'none') {
-                                detailsDiv.style.display = 'block';
-                                fetchAdditionalDetails(place.place_id, detailsDiv);
+                                detailsDiv.style.display = 'block'; // Show the details
+                                fetchAdditionalDetails(place.place_id, detailsDiv, place.name); // Fetch details if necessary
                             }
+                
+                            // Change the current marker to blue and reset others to red
+                            setActiveMarker(marker, index);
                         });
                 
                         card.innerHTML = `
@@ -188,18 +205,44 @@
                 
                         // Add click event to toggle details
                         card.querySelector('.toggle-details').addEventListener('click', function() {
+                            // Collapse all other details
+                            document.querySelectorAll('.details').forEach(function(detailsDiv) {
+                                detailsDiv.style.display = 'none'; // Collapse all details
+                            });
+                
+                            // Show details for this card
                             const detailsDiv = document.getElementById(`details-${index}`);
                             if (detailsDiv.style.display === 'none') {
                                 detailsDiv.style.display = 'block';
                                 fetchAdditionalDetails(place.place_id, detailsDiv, place.name);
+                                setActiveMarker(marker, index); // Set marker to blue
                             } else {
                                 detailsDiv.style.display = 'none';
+                                resetMarkerToRed(marker); // Set marker back to red when the card is closed
                             }
                         });
                     });
                 
                     // Show sorting options
                     document.getElementById('sort-options').style.display = 'block';
+                }
+                
+                // Function to set the active marker and reset others
+                function setActiveMarker(marker, index) {
+                    // If a previous marker is active, reset its icon to the default icon
+                    if (activeMarkerIndex !== null && activeMarkerIndex !== index) {
+                        markers[activeMarkerIndex].setIcon(defaultMarkerIcon); // Reset to default red icon
+                    }
+                
+                    // Set the current marker to blue
+                    marker.setIcon(activeMarkerIcon); // Set to blue icon
+                
+                    activeMarkerIndex = index; // Update the active marker index
+                }
+                
+                // Function to reset marker to red when a card is closed
+                function resetMarkerToRed(marker) {
+                    marker.setIcon(defaultMarkerIcon); // Set back to red icon
                 }
                 
                 function fetchAdditionalDetails(placeId, detailsDiv, place_name) {
@@ -266,6 +309,10 @@
                             // Add event listener for collapse button
                             detailsDiv.querySelector('.collapse-details').addEventListener('click', function() {
                                 detailsDiv.style.display = 'none'; // Hide the details
+                                                
+                                // Reset the marker back to red
+                                resetMarkerToRed(markers[activeMarkerIndex]);
+                                activeMarkerIndex = null; // Reset active marker index
                             });
                 
                             reviews.forEach((review, index) => {
@@ -366,7 +413,7 @@
                 // Load the Google Maps API script
                 function loadGoogleMapsApi() {
                     const script = document.createElement('script');
-                    script.src = 'https://maps.googleapis.com/maps/api/js?key=KEY&libraries=places,geometry&callback=initMap';
+                    script.src = 'https://maps.googleapis.com/maps/api/js?key=AIzaSyBbMTTvhF3t8FS6IwjcIaNvHZq18k9y7sc&libraries=places,geometry&callback=initMap';
                     script.async = true;
                     script.defer = true;
                     document.head.appendChild(script);
@@ -378,5 +425,4 @@
         </div>
     </div>
 {% endblock %}
-
 
