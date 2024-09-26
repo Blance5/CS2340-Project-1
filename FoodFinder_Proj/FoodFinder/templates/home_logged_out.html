@@ -2,9 +2,15 @@
 {% extends "base.html" %}
 
 {% block title %}Home - FoodFinder{% endblock %}
+{% load static %}
+{% block css%}  
+    <link rel="stylesheet" href="{% static 'log.css' %}">
+{% endblock%}
 
 {% block content %}
+<div class="content">
     <h2>Welcome to FoodFinder!</h2>
     <p>Your destination for finding great food.</p>
     <p>THIS IS THE HOME PAGE FOR BEING LOGGED OUT</p>
+</div>
 {% endblock %}
