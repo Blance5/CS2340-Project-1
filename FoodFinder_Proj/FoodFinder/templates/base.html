@@ -6,14 +6,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-    <title>{% block title %}My Django App{% endblock %}</title>
+    <title>{% block title %}FoodFinder{% endblock %}</title>
+
     {% block css%}
         <link rel="stylesheet" href="{% static 'home_nav_bar.css' %}">
     {% endblock %}
 </head>
 <body>
     <header>
-        <h1>My Django App</h1>
+        <h1>FoodFinder</h1>
         <nav>
             <ul>
                 <li><a href="{% url 'home_redirect' %}">Home</a></li>
