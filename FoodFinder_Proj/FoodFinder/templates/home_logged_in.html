@@ -6,20 +6,20 @@
 
 {% block css%}
     <link rel="stylesheet" href="{% static 'home_nav_bar.css' %}">
-    <link rel="stylesheet" href="{% static 'resturant_card.css' %}">
+    <link rel="stylesheet" href="{% static 'restaurant_card.css' %}">
 {% endblock%}
 
 {% block content %}
     <div class="content-wrapper">
         <div class="main-container">
             <div class="left-container">
-                <h2>Welcome to Atlanta Food Finder!</h2>
-                <p>{{ user.username }}'s destination for finding great food, presented by Group 42.</p>
-                <p>Feel free to search for a restaurant or cuisine type, then you can sort by various criteria such as ratings or distance. <br><br>
-                    On the interactive map, you can easily review the locations corresponding with your search. <br><br>
-                    From there, you can click on a restaurant marker to review detailed information and individual user reviews. <br><br>
-                    Finally, you are able to view the location on Google Maps and get directions from there. <br><br>
-                    If you like a restaurant, save it to your favorites to easily find them later!</p>
+                <h2>Welcome to FoodFinder!</h2>
+                <p><i>{{ user.username }}'s go-to destination for discovering great food, brought to you by Group 42.</i></p>
+                <p>
+                    Start by searching for a restaurant or a type of cuisine. Once you've found what you're looking for, you can sort the results by ratings, distance, or other criteria to narrow down your choices. <br><br>
+                    Need directions? You can seamlessly view the restaurant's location on Google Maps and get directions with one click. <br><br>
+                    Love a place? Add it to your favorites so you can easily find it later!
+                </p>
 
                 <!-- Search bar -->
                 <form id="search-form">
@@ -44,8 +44,7 @@
             </div>
 
             <div class="right-container">
-                <h2>Map</h2>
-                <div id="map" style="height: 500px; width: 100%;"></div> <!-- Adjust height as needed -->
+                <div id="map" style="height: 700px; width: 800px;"></div> <!-- Adjust height as needed -->
             </div>
 
             <script>

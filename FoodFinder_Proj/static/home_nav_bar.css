@@ -1,0 +1,192 @@
+/* FoodFinder/static/styles.css */
+body {
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 0;
+    background: linear-gradient(135deg, #f0f0f0, #e0e0e0);
+}
+
+header {
+    background-color: #333;
+    color: white;
+    padding: 1rem;
+    text-align: center;
+}
+
+header h1 {
+    font-size: 3rem;
+    text-shadow:
+        0 0 3px rgba(255, 255, 255, 0.5);
+    margin: 0;
+    filter: drop-shadow(0 0 3px rgba(255, 255, 255, 0.3)); /* subtle additional glow */
+}
+
+
+nav ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+nav ul li {
+    padding: 2.5px 5px;
+    display: inline;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.5s ease, transform 0.2s ease, box-shadow 0.5s ease;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+nav ul li:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+form li {
+    font-size: 14px;
+    list-style-type: none;
+}
+
+ul {
+    text-decoration: none;
+    list-style-type: none;
+}
+
+a {
+    text-decoration: none;
+}
+
+nav ul li a {
+    color: white;
+    text-decoration: none;
+    list-style-type: none;
+}
+
+nav ul li:active {
+    transform: translateY(0) scale(0.98);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* Basic styling for the select element */
+select {
+    background-color: #f9f9f9; /* Light background */
+    border: 2px solid #ccc; /* Custom border */
+    border-radius: 15px; /* Rounded corners */
+    padding: 10px 10px 10px 10px; /* Padding (right padding accounts for arrow) */
+    font-size: 16px; /* Modern font size */
+    cursor: pointer; /* Pointer cursor */
+    box-sizing: border-box; /* Ensures padding is included in width */
+    transition: border-color 0.3s ease, box-shadow 0.3s ease; /* Smooth transitions */
+    outline: none; /* Removes the default outline */
+    margin-top: 10px;
+}
+    
+
+/* Add hover effect */
+select:hover {
+    border-color: #4a90e2; /* Change border color on hover */
+}
+
+/* Focus (when clicked) */
+select:focus {
+    border-color: #4a90e2; /* Custom border color on focus */
+    box-shadow: 0 0 5px rgba(74, 144, 226, 0.5); /* Subtle shadow */
+}
+
+/* Dropdown arrow customization */
+select::after {
+    content: '\25BC'; /* Unicode for the downward arrow */
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    pointer-events: none;
+    color: #4a90e2; /* Color for arrow */
+}
+
+
+/* Styling for the text box */
+input[type="text"],
+input[type="password"] {
+    padding: 10px; /* Space inside the text box */
+    border: 2px solid #ccc; /* Border color */
+    border-radius: 15px; /* Rounded edges */
+    font-size: 16px; /* Font size */
+    transition: border-color 0.5s ease, box-shadow 0.5s ease; /* Smooth transition for effects */
+    box-sizing: border-box; /* Ensure padding is included in the total width */
+}
+
+/* Focus state for the text box */
+input[type="text"]:focus,
+input[type="password"]:focus {
+    border-color: #4a90e2; /* Border color on focus */
+    box-shadow: 0 0 5px rgba(74, 144, 226, 0.5); /* Shadow effect on focus */
+    outline: none; /* Remove default outline */
+}
+
+/* Modern styling for the get-directions button */
+button.get-directions {
+    padding: 5px 10px; /* Space inside the button */
+    color: white; /* Text color */
+    font-size: 14px; /* Font size */
+    cursor: pointer; /* Change cursor on hover */
+    transition: background-color 0.3s ease, box-shadow 0.3s ease; /* Smooth transition for effects */
+    box-sizing: border-box; /* Ensure padding is included in the total width */
+}
+
+/* Hover state for the get-directions button */
+button.get-directions:hover {
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Shadow effect on hover */
+}
+
+button {
+    border-radius: 15px; /* Rounded edges */
+}
+
+button[type="submit"] {
+    padding: 5px 10px; /* Space inside the button */
+    border: none; /* Remove default border */
+    border-radius: 15px; /* Rounded edges */
+    background-color: #4a90e2; /* Background color */
+    color: white; /* Text color */
+    font-size: 16px; /* Font size */
+    cursor: pointer; /* Change cursor on hover */
+    transition: background-color 0.5s ease, box-shadow 0.5s ease; /* Smooth transition for effects */
+    box-sizing: border-box; /* Ensure padding is included in the total width */
+}
+
+/* Hover state for the button */
+button[type="submit"]:hover {
+    background-color: #357ab8; /* Darker background on hover */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Shadow effect on hover */
+}
+
+/* Active state for the button */
+button[type="submit"]:active {
+    background-color: #2d5f8a; /* Even darker background when pressed */
+}
+
+/* Add transition to hover effect */
+button[type="submit"]:hover,
+button[type="submit"]:active {
+    transition: background-color 0.5s ease, box-shadow 0.5s ease; /* Ensure hover and active states have smooth transition */
+}
+
+footer {
+    background-color: #333;
+    color: white;
+    text-align: center;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    font-size: 12px;
+}
+
+#map, #results-list {
+    border: 2px solid black;
+    padding: 0;
+    box-sizing: border-box;
+}
+    border: 2px solid black; /* Black border */
+    padding: 0; /* No padding */
+}
