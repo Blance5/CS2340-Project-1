@@ -155,10 +155,10 @@
                         const halfStar = rating % 1 >= 0.5 ? 1 : 0;
                         const emptyStars = 5 - fullStars - halfStar;
                 
-                        const starHTML = '★'.repeat(fullStars) +
-                                         (halfStar ? '½' : '') +
-                                         '☆'.repeat(emptyStars);
-                
+                        const starHTML = '<i class="material-icons" style="color:#434343; font-size:16px; vertical-align:-2.5px;">star</i>'.repeat(fullStars) +
+                            (halfStar ? '<i class="material-icons" style="color:#434343; font-size:16px; vertical-align:-2.5px;">star_half</i>' : '') +
+                            '<i class="material-icons" style="color:#434343; font-size:16px; vertical-align:-2.5px;">star_border</i>'.repeat(emptyStars);
+
                         const distance = calculateDistance(place.geometry.location, userPosition);
                         place.distance = distance; // Store distance for sorting
                 
@@ -347,10 +347,10 @@
                     const halfStar = rating % 1 >= 0.5 ? 1 : 0;
                     const emptyStars = 5 - fullStars - halfStar;
 
-                    const starHTML = '★'.repeat(fullStars) + 
-                                    (halfStar ? '½' : '') + 
-                                    '☆'.repeat(emptyStars);
-
+                    const starHTML = '<i class="material-icons" style="color:#434343; font-size:16px; vertical-align:-2.5px;">star</i>'.repeat(fullStars) +
+                        (halfStar ? '<i class="material-icons" style="color:#434343; font-size:16px; vertical-align:-2.5px;">star_half</i>' : '') +
+                        '<i class="material-icons" style="color:#434343; font-size:16px; vertical-align:-2.5px;">star_border</i>'.repeat(emptyStars);
+                    
                     return `
                         <li id="review-${index}">
                             <div style="display:flex; align-items:center;">
