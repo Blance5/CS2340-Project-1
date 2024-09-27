@@ -172,6 +172,8 @@ button[type="submit"]:active {
     transition: background-color 0.5s ease, box-shadow 0.5s ease; /* Ensure hover and active states have smooth transition */
 }
 
+/*Chech to make sure right buttons */
+
 footer {
     background-color: #333;
     color: white;
