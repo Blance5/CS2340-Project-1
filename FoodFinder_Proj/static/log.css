@@ -4,8 +4,16 @@ body {
     margin: 0;
     padding: 0;
     background: linear-gradient(135deg, #f0f0f0, #e0e0e0);
+    
 }
-
+.content {
+    display: flex;
+    flex-grow: 1; /* Allow content to grow and fill available space */
+    justify-content: center; /* Horizontally center content */
+    align-items: center; /* Vertically center content */
+    flex-direction: column;
+    text-align: center;
+}
 header {
     background-color: #333;
     color: white;
@@ -21,6 +29,51 @@ header h1 {
     filter: drop-shadow(0 0 3px rgba(255, 255, 255, 0.3)); /* subtle additional glow */
 }
 
+.header-container {
+    display: flex; /* Use Flexbox to align items side by side */
+    align-items: center; /* Center them vertically */
+    justify-content: center; /* Optional: center them horizontally */
+}
+
+/* Form Container */
+form {
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    padding: 1.5rem; /* Reduced padding */
+    max-width: 400px; /* Adjusted max-width */
+    width: 100%;
+    text-align: center;
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+    margin: 0 auto; /* Ensure form is centered */
+}
+
+form a {
+    display: block; /* Forces the form and anchor to take up the full width and appear on their own line */
+    margin-bottom: 1rem; /* Adds space below each element */
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+
+[title="Google"] {
+    padding: 5px 10px; /* Space inside the button */
+    border: none; /* Remove default border */
+    border-radius: 15px; /* Rounded edges */
+    background-color: #4a90e2; /* Background color */
+    color: white; /* Text color */
+    font-size: 16px; /* Font size */
+    cursor: pointer; /* Change cursor on hover */
+    transition: background-color 0.5s ease, box-shadow 0.5s ease; /* Smooth transition for effects */
+    box-sizing: border-box; /* Ensure padding is included in the total width */
+}
+
+.special-form form {
+    background: none;
+    border: none;
+    box-shadow: none;
+    display: flex;
+}
 
 nav ul {
     list-style-type: none;
@@ -67,45 +120,10 @@ nav ul li:active {
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
-/* Basic styling for the select element */
-select {
-    background-color: #f9f9f9; /* Light background */
-    border: 2px solid #ccc; /* Custom border */
-    border-radius: 15px; /* Rounded corners */
-    padding: 10px 10px 10px 10px; /* Padding (right padding accounts for arrow) */
-    font-size: 16px; /* Modern font size */
-    cursor: pointer; /* Pointer cursor */
-    box-sizing: border-box; /* Ensures padding is included in width */
-    transition: border-color 0.3s ease, box-shadow 0.3s ease; /* Smooth transitions */
-    outline: none; /* Removes the default outline */
-    margin-top: 10px;
-}
-    
-
-/* Add hover effect */
-select:hover {
-    border-color: #4a90e2; /* Change border color on hover */
-}
-
-/* Focus (when clicked) */
-select:focus {
-    border-color: #4a90e2; /* Custom border color on focus */
-    box-shadow: 0 0 5px rgba(74, 144, 226, 0.5); /* Subtle shadow */
-}
-
-/* Dropdown arrow customization */
-select::after {
-    content: '\25BC'; /* Unicode for the downward arrow */
-    position: absolute;
-    right: 15px;
-    top: 50%;
-    transform: translateY(-50%);
-    pointer-events: none;
-    color: #4a90e2; /* Color for arrow */
-}
 
 
 /* Styling for the text box */
+input[type="email"],
 input[type="text"],
 input[type="password"] {
     padding: 10px; /* Space inside the text box */
@@ -117,6 +135,7 @@ input[type="password"] {
 }
 
 /* Focus state for the text box */
+input[type="email"]:focus,
 input[type="text"]:focus,
 input[type="password"]:focus {
     border-color: #4a90e2; /* Border color on focus */
@@ -171,8 +190,6 @@ button[type="submit"]:hover,
 button[type="submit"]:active {
     transition: background-color 0.5s ease, box-shadow 0.5s ease; /* Ensure hover and active states have smooth transition */
 }
-
-/*Chech to make sure right buttons */
 
 footer {
     background-color: #333;

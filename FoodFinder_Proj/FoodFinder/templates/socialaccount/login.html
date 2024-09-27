@@ -2,7 +2,12 @@
 {% extends "base_no_login.html" %}
 {% load i18n %}
 {% load allauth %}
+{% load static %}
+{% block css%}  
+    <link rel="stylesheet" href="{% static 'log.css' %}">
+{% endblock%}
 {% block content %}
+<div class="content">
     {% if process == "connect" %}
         {% element h1 %}
             {% blocktrans with provider.name as provider %}Connect {{ provider }}{% endblocktrans %}
@@ -18,7 +23,8 @@
             {% blocktrans with provider.name as provider %}You are about to sign in using a third-party account from {{ provider }}.{% endblocktrans %}
         {% endelement %}
     {% endif %}
-    {% element form method="post" no_visible_fields=True %}
+    <div class="special-form">
+    {% element form method="post" no_visible_fields=True attrs="{ 'class': 'custom'}" %}
         {% slot actions %}
             {% csrf_token %}
             {% element button type="submit" %}
@@ -26,4 +32,6 @@
             {% endelement %}
         {% endslot %}
     {% endelement %}
+    </div>
+</div>
 {% endblock content %}
