@@ -6,7 +6,7 @@
 
 {% block css%}
     <link rel="stylesheet" href="{% static 'home_nav_bar.css' %}">
-    <link rel="stylesheet" href="{% static 'resturant_card.css' %}">
+    <link rel="stylesheet" href="{% static 'restaurant_card.css' %}">
 {% endblock%}
 
 {% block content %}
@@ -14,8 +14,12 @@
         <div class="main-container">
             <div class="left-container">
                 <h2>Welcome to FoodFinder!</h2>
-                <p>Your destination for finding great food.</p>
-                <p>THIS IS THE HOME PAGE FOR BEING LOGGED IN</p>
+                <p><i>{{ user.username }}'s go-to destination for discovering great food, brought to you by Group 42.</i></p>
+                <p>
+                    Start by searching for a restaurant or a type of cuisine. Once you've found what you're looking for, you can sort the results by ratings, distance, or other criteria to narrow down your choices. <br><br>
+                    Need directions? You can seamlessly view the restaurant's location on Google Maps and get directions with one click. <br><br>
+                    Love a place? Add it to your favorites so you can easily find it later!
+                </p>
 
                 <!-- Search bar -->
                 <form id="search-form">
@@ -40,8 +44,7 @@
             </div>
 
             <div class="right-container">
-                <h2>Map</h2>
-                <div id="map" style="height: 500px; width: 100%;"></div> <!-- Adjust height as needed -->
+                <div id="map" style="height: 700px; width: 800px;"></div> <!-- Adjust height as needed -->
             </div>
 
             <script>
@@ -425,4 +428,5 @@
         </div>
     </div>
 {% endblock %}
+
 
