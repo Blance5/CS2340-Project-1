@@ -107,18 +107,19 @@ select::after {
 
 /* Styling for the text box */
 input[type="text"],
-input[type="password"] {
+input[type="number"] {
     padding: 10px; /* Space inside the text box */
     border: 2px solid #ccc; /* Border color */
     border-radius: 15px; /* Rounded edges */
     font-size: 16px; /* Font size */
     transition: border-color 0.5s ease, box-shadow 0.5s ease; /* Smooth transition for effects */
     box-sizing: border-box; /* Ensure padding is included in the total width */
+    margin-top: 5px;
 }
 
 /* Focus state for the text box */
 input[type="text"]:focus,
-input[type="password"]:focus {
+input[type="number"]:focus {
     border-color: #4a90e2; /* Border color on focus */
     box-shadow: 0 0 5px rgba(74, 144, 226, 0.5); /* Shadow effect on focus */
     outline: none; /* Remove default outline */
