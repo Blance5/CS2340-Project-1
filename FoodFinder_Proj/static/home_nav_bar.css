@@ -181,3 +181,12 @@ footer {
     width: 100%;
     font-size: 12px;
 }
+
+#map, #results-list {
+    border: 2px solid black;
+    padding: 0;
+    box-sizing: border-box;
+}
+    border: 2px solid black; /* Black border */
+    padding: 0; /* No padding */
+}

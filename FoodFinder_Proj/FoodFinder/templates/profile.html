@@ -1,13 +1,11 @@
-{% extends "base.html" %}  
-{% block title %}Profile - FoodFinder{% endblock %}
+{% extends "base.html" %}
 {% load static%}
-{% block css%}  
-    <link rel="stylesheet" href="{% static 'log.css' %}">
-{% endblock%}
+
+{% block title %}Profile - FoodFinder{% endblock %}
+
 
 
 {% block content %}
-<div class="content">
     <h2>{{ user.username }}'s Profile</h2>
     <p><strong>Email:</strong>
         {% if user.email %}
@@ -20,5 +18,4 @@
     </p>
     <p><strong>First name:</strong> {{ user.first_name }}</p>
     <p><strong>Last name:</strong> {{ user.last_name }}</p>
-</div>
 {% endblock %}
