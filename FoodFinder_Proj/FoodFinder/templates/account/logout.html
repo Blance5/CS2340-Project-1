@@ -3,14 +3,14 @@
 
 {% load allauth i18n %}
 {% block head_title %}
-{% load static %}
-{% block css%}  
-    <link rel="stylesheet" href="{% static 'log.css' %}">
-{% endblock%}
     {% comment %}
     {% trans "Sign Out" %}
     {% endcomment %}
 {% endblock head_title %}
+{% load static %}
+{% block css %}
+<link rel="stylesheet" href="{% static 'log.css' %}">
+{% endblock %}
 {% block content %}
 <div class="content">
     {% element h1 %}
@@ -32,6 +32,6 @@
             {% endelement %}
         {% endslot %}
     {% endelement %}
-</div>
+</div> 
 </div>
 {% endblock content %}
