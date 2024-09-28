@@ -6,12 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="8697d947-b73c-48f3-a28c-e5ffec04eb41" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FoodFinder_Proj/FoodFinder/templates/account/logout.html" beforeDir="false" afterPath="$PROJECT_DIR$/FoodFinder_Proj/FoodFinder/templates/account/logout.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FoodFinder_Proj/FoodFinder/templates/base_no_login.html" beforeDir="false" afterPath="$PROJECT_DIR$/FoodFinder_Proj/FoodFinder/templates/base_no_login.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FoodFinder_Proj/FoodFinder/templates/favicon.ico" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/FoodFinder_Proj/FoodFinder/templates/logo.png" beforeDir="false" afterPath="$PROJECT_DIR$/FoodFinder_Proj/static/logo.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FoodFinder_Proj/FoodFinder/templates/profile.html" beforeDir="false" afterPath="$PROJECT_DIR$/FoodFinder_Proj/FoodFinder/templates/profile.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FoodFinder_Proj/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/FoodFinder_Proj/db.sqlite3" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FoodFinder_Proj/FoodFinder_Proj/config.py" beforeDir="false" afterPath="$PROJECT_DIR$/FoodFinder_Proj/FoodFinder_Proj/config.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
