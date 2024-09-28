@@ -1,13 +1,11 @@
-{% extends "base.html" %}  
-{% block title %}Profile - FoodFinder{% endblock %}
+{% extends "base.html" %}
 {% load static%}
-{% block css%}  
-    <link rel="stylesheet" href="{% static 'log.css' %}">
-{% endblock%}
+
+{% block title %}Profile - FoodFinder{% endblock %}
+
 
 
 {% block content %}
-<div class="content">
     <h2>{{ user.username }}'s Profile</h2>
     <p><strong>Email:</strong>
         {% if user.email %}
@@ -18,11 +16,6 @@
             No email available
         {% endif %}
     </p>
-  
-    <p><strong>Name:</strong>
-        {% if user.first_name and user.last_name %}
-            {{ user.first_name }} {{user.last_name }}
-        {% else %}
-            No name avaliable
-        {% endif %}
+    <p><strong>First name:</strong> {{ user.first_name }}</p>
+    <p><strong>Last name:</strong> {{ user.last_name }}</p>
 {% endblock %}
