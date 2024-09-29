@@ -24,24 +24,20 @@
         {% else %}
             No name avaliable
         {% endif %}
-        
-    <p><strong>Favorite Restaurants:</strong>
+
+    <p>Favorite Restaurants:</p>
     <table id="myTable">
         <thead>
             <tr>
                 <th onclick="sortTable(0)">Restaurant Name</th>
                 <th onclick="sortTable(1)">Rating</th>
-                <th onclick="sortTable(2)">Distance</th>
-                <th onclick="sortTable(2)">Cuisine</th>
             </tr>
         </thead>
         <tbody>
-            {% for place in persons %}
+            {% for restaurant in fav_restaurant %}
         <tr>
-            <td>{{ fav_restaurant.name }}</td>
-            <td>{{ fav_restaurant.rating }}</td>
-            <td>{{ fav_restaurant.distance }}</td>
-            <td>{{ fav_restaurant.cuisine }}</td>
+            <td>{{ restaurant.name }}</td>
+            <td>{{ restaurant.rating }}</td>
          </tr>
             {% endfor %}
         </tbody>

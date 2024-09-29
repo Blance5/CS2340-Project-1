@@ -195,23 +195,20 @@
                 
                         card.innerHTML = `
                             <h3 style="display: inline;">${place.name}</h3>
-                            
-                            <form method="post" action="{% url 'add_favorite' id %}">
-                                {% csrf_token %}
-                                <button type="submit" name="favButton" style="float: right;" class="favorite-icons" title="Favorite" aria-label="Favorite">
-                                {% if user in restaurant.favorites.all %}
-                                    <i class="material-icons">favorite</i>
-                                {% else %}
-                                    <i class="material-icons">favorite_outlined</i>
-                                {% endif %}
-                            </button>
-                                
+                           
+                            <form method="post">
+                               {% csrf_token %}
+                               <input type="hidden" name="place_id" value="${place.place_id}">
+                               <input type="hidden" name="name" value="${place.name}">
+                               <input type="hidden" name="rating" value="${rating}">
+                               <button type="submit" name="favButton" style="float: right;" class="favorite-icons" title="Favorite" aria-label="Favorite"> <i class="material-icons">favorite</i> </button>
                             </form>
                             
                             <p>Rating: ${starHTML} (${place.user_ratings_total || 0} reviews)</p>
                             <p>Distance: ${distance} mi</p>
                             <p class="toggle-details" style="cursor:pointer; color:blue;">Show Details</p>
                             <div id="details-${index}" class="details" style="display:none;"></div>
+        
                         `;
                 
                         resultsList.appendChild(card); // Append card to the results list
