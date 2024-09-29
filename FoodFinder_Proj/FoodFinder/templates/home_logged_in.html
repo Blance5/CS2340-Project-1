@@ -6,7 +6,7 @@
 
 {% block css%}
     <link rel="stylesheet" href="{% static 'home_nav_bar.css' %}">
-    <link rel="stylesheet" href="{% static 'resturant_card.css' %}">
+    <link rel="stylesheet" href="{% static 'restaurant_card.css' %}">
 {% endblock%}
 
 {% block content %}
@@ -14,15 +14,25 @@
         <div class="main-container">
             <div class="left-container">
                 <h2>Welcome to FoodFinder!</h2>
-                <p>Your destination for finding great food.</p>
-                <p>THIS IS THE HOME PAGE FOR BEING LOGGED IN</p>
+                <p><i>{{ user.username }}'s go-to destination for discovering great food, brought to you by Group 42.</i></p>
+                <p>
+                    Start by searching for a restaurant or a type of cuisine. Once you've found what you're looking for, you can sort the results by ratings, distance, or other criteria to narrow down your choices. <br><br>
+                    Need directions? You can seamlessly view the restaurant's location on Google Maps and get directions with one click. <br><br>
+                    Love a place? Add it to your favorites so you can easily find it later!
+                </p>
 
                 <!-- Search bar -->
                 <form id="search-form">
-                    <input type="text" id="search-query" placeholder="Search for restaurants..." required>
-                    <button type="submit">Search</button>
+                    <div class="search-container">
+                        <input type="text" id="search-query" placeholder="Search for restaurants..." required>
+                        <button type="submit">Search</button>
+                    </div>
+                    <div>
+                        <label for="search-radius">Search radius (miles):</label>
+                        <input type="number" id="search-radius" value="5" min="1" step="1">
+                    </div>
                 </form>
-
+                
                 <div id="sort-options" style="display: none;">
                     <label for="sort-select">Sort by:</label>
                     <select id="sort-select">
@@ -40,8 +50,7 @@
             </div>
 
             <div class="right-container">
-                <h2>Map</h2>
-                <div id="map" style="height: 500px; width: 100%;"></div> <!-- Adjust height as needed -->
+                <div id="map" style="height: 700px; width: 800px;"></div> <!-- Adjust height as needed -->
             </div>
 
             <script>
@@ -104,14 +113,19 @@
                         navigator.geolocation.getCurrentPosition(function(position) {
                             userPosition = position;
                             const userLocation = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+                            
+                            // Get the search radius value and convert it to meters
+                            const radiusInMiles = document.getElementById('search-radius').value;
+                            const radiusInMeters = radiusInMiles * 1609.34; // 1 mile = 1609.34 meters
+                            
                             const request = {
                                 location: userLocation,
-                                radius: '5000',
+                                radius: radiusInMeters.toString(), // Convert to string as required by the API
                                 type: ['restaurant'],
                                 keyword: query,
                                 fields: ['name', 'geometry', 'place_id', 'rating', 'user_ratings_total', 'vicinity', 'price_level']
                             };
-
+                
                             placesService.nearbySearch(request, function(results, status) {
                                 if (status === google.maps.places.PlacesServiceStatus.OK) {
                                     currentResults = results;
@@ -438,4 +452,5 @@
         </div>
     </div>
 {% endblock %}
+
 

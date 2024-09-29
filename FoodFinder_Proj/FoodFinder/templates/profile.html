@@ -1,9 +1,10 @@
-{% extends "base.html" %}  
+{% extends "base.html" %}
+{% load static %}
+{% block css %}
+<link rel="stylesheet" href="{% static 'log.css' %}">
+{% endblock %}
 {% block title %}Profile - FoodFinder{% endblock %}
-{% load static%}
-{% block css%}  
-    <link rel="stylesheet" href="{% static 'log.css' %}">
-{% endblock%}
+
 
 
 {% block content %}

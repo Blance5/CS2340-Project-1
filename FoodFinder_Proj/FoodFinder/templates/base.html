@@ -8,13 +8,18 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <title>{% block title %}FoodFinder{% endblock %}</title>
 
+    <!-- Link to favicon -->
+    <link rel="icon" type="image/x-icon" href="{% static 'favicon.ico' %}">
+
     {% block css%}
         <link rel="stylesheet" href="{% static 'home_nav_bar.css' %}">
     {% endblock %}
 </head>
 <body>
-    <header>
-        <h1>FoodFinder</h1>
+    <header style="position: relative;">
+        <img src="{% static 'logo.png' %}" alt="logo" style="position: absolute; left: 5px; top: 70%; transform: translateY(-70%); height: auto; max-width: 100px;">
+
+        <h1 style="text-align: center; margin: 0;">FoodFinder</h1>
         <nav>
             <ul>
                 <li><a href="{% url 'home_redirect' %}">Home</a></li>
@@ -28,13 +33,13 @@
             </ul>
         </nav>
     </header>
-    
+
     <main>
         {% block content %}
         <!-- Page-specific content will go here -->
         {% endblock %}
     </main>
-    
+
     <footer>
         <p>&copy; 2024 FoodFinder</p>
     </footer>
