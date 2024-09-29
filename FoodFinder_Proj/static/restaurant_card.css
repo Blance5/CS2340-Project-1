@@ -1,0 +1,166 @@
+#results-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    /* move cards to right */
+    padding: 0px;
+}
+
+.container {
+    display: flex; /* Use flexbox for layout */
+    width: 100%; /* Full width of the parent */
+    height: calc(100vh - 50px); /* Optional: set height to full viewport */
+}
+
+.restaurant-card {
+    background-color: #fff;
+    border-radius: 8px;
+    
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    margin: 0px;
+    padding: 0px;
+    width: 300px;
+    transition: transform 0.3s ease;
+}
+
+.restaurant-card:hover {
+    transform: translateY(-5px);
+}
+
+.restaurant-card h3 {
+    color: #333;
+    margin-top: 0;
+}
+
+.restaurant-card p {
+    color: #666;
+    margin: 5px 0;
+}
+
+.restaurant-card p:last-child {
+    margin-bottom: 0;
+}
+
+.restaurant-link {
+    /*text-decoration: none !important; /* Remove underline */
+    color: inherit; /* Make text color inherit from parent */
+}
+
+.restaurant-link:hover {
+    /*text-decoration: underline !important; /* Optional: underline on hover for accessibility */
+}
+
+.details {
+    margin-top: 10px;
+    padding: 10px;
+    border: 1px solid #ccc; /* Optional styling */
+    background-color: #f9f9f9; /* Optional background */
+}
+
+/* Add this to your 'resturant_card.css' file */
+#results-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    padding: 0;
+    width: 100%; /* Ensure it takes full width of its container */
+}
+
+.restaurant-card {
+    width: calc(100% - 20px); /* Half the screen width */
+    margin: 10px 0; /* Space between cards */
+    border: 1px solid #ccc; /* Optional border for visibility */
+    border-radius: 5px; /* Optional rounded corners */
+    padding: 10px; /* Padding for card content */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Optional shadow */
+    transition: box-shadow 0.3s; /* Smooth shadow transition */
+}
+
+.restaurant-card:hover {
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Slightly larger shadow on hover */
+}
+
+.reviews-container {
+    max-height: 200px; /* Set a height limit */
+    overflow-y: auto;  /* Enable vertical scrolling */
+    padding: 10px;
+    border: 1px solid #ccc; /* Optional styling */
+    margin-top: 10px; /* Space above the reviews */
+    background-color: #f9f9f9; /* Light background for visibility */
+}
+
+
+.reviews-container ul {
+    list-style-type: none; /* Optional styling to remove bullets */
+    padding: 0;
+    margin: 0;
+}
+
+.reviews-container li {
+    margin-bottom: 10px; /* Space between reviews */
+}
+
+
+.content-wrapper {
+    height: calc(100vh - 50px); /* Full viewport height */
+    overflow: hidden; /* Prevent scrolling on the body */
+}
+
+#map {
+    height: 90%;
+    width: 140%;
+}
+
+.main-container {
+    display: flex;
+    justify-content: space-between;
+    max-width: 1500px; /* Adjust the width as necessary */
+    margin: 0 auto; /* Center the container */
+    width: 100%; /* Ensure the container takes full width */
+    height: calc(100vh - 100px); /* Adjust based on your header/footer height */
+    overflow: hidden; /* Prevent scrolling on the main container */
+}
+
+.left-container {
+    flex: 1;
+    padding: 20px;
+    box-sizing: border-box;
+    overflow-y: auto; /* Enable vertical scrolling */
+    height: 100%; /* Take full height of parent */
+}
+
+.right-container {
+    flex: 1;
+    padding: 20px;
+    box-sizing: border-box;
+    height: 100%; /* Take full height of parent */
+}
+
+.left-container::-webkit-scrollbar {
+    width: 10px;
+}
+
+.left-container::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+.left-container::-webkit-scrollbar-thumb {
+    background: #888;
+}
+
+.left-container::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+
+
+@media (max-width: 768px) {
+    .main-container {
+        flex-direction: column;
+        height: auto;
+    }
+
+    .left-container, .right-container {
+        width: 100%;
+        height: 50vh; /* Adjust as needed for mobile */
+    }
+}
