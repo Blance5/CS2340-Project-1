@@ -104,7 +104,6 @@ select::after {
     color: #4a90e2; /* Color for arrow */
 }
 
-
 /* Styling for the text box */
 input[type="text"],
 input[type="password"] {
@@ -139,6 +138,20 @@ button.get-directions:hover {
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Shadow effect on hover */
 }
 
+/* Modern styling for the get-directions button */
+button.favorite-icons {
+    display: inline-block;
+    padding: 5px 10px; /* Space inside the button */
+    cursor: pointer; /* Change cursor on hover */
+    transition: background-color 0.3s ease, box-shadow 0.3s ease; /* Smooth transition for effects */
+    box-sizing: border-box; /* Ensure padding is included in the total width */
+    border-radius: 15px; /* Rounded edges */
+}
+
+button.favorite-icons:hover {
+    background-color: red
+}
+
 button {
     border-radius: 15px; /* Rounded edges */
 }
@@ -153,6 +166,10 @@ button[type="submit"] {
     cursor: pointer; /* Change cursor on hover */
     transition: background-color 0.5s ease, box-shadow 0.5s ease; /* Smooth transition for effects */
     box-sizing: border-box; /* Ensure padding is included in the total width */
+}
+
+button.remove-all-styles {
+    all: initial;
 }
 
 /* Hover state for the button */
@@ -171,8 +188,6 @@ button[type="submit"]:hover,
 button[type="submit"]:active {
     transition: background-color 0.5s ease, box-shadow 0.5s ease; /* Ensure hover and active states have smooth transition */
 }
-
-/*Chech to make sure right buttons */
 
 footer {
     background-color: #333;

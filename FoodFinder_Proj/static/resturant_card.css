@@ -76,13 +76,6 @@
     transition: box-shadow 0.3s; /* Smooth shadow transition */
 }
 
-.restaurant-card-button{
-    background-color: #ff0000;
-    color: white;
-    border: none;
-    cursor: pointer;
-}
-
 .restaurant-card:hover {
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Slightly larger shadow on hover */
 }
@@ -145,6 +138,7 @@
 
 .left-container::-webkit-scrollbar {
     width: 10px;
+    scroll-padding-top: 20px;
 }
 
 .left-container::-webkit-scrollbar-track {
