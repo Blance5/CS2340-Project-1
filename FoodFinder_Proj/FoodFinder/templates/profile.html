@@ -19,7 +19,76 @@
             No email available
         {% endif %}
     </p>
-    <p><strong>First name:</strong> {{ user.first_name }}</p>
-    <p><strong>Last name:</strong> {{ user.last_name }}</p>
+    <p><strong>Name:</strong>
+        {% if user.first_name and user.last_name %}
+            {{ user.first_name }} {{user.last_name }}
+        {% else %}
+            No name avaliable
+        {% endif %}
+        
+    <p><strong>Favorite Restaurants:</strong>
+    <table id="myTable">
+        <thead>
+            <tr>
+                <th onclick="sortTable(0)">Restaurant Name</th>
+                <th onclick="sortTable(1)">Rating</th>
+                <th onclick="sortTable(2)">Distance</th>
+                <th onclick="sortTable(2)">Cuisine</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for place in persons %}
+        <tr>
+            <td>{{ fav_restaurant.name }}</td>
+            <td>{{ fav_restaurant.rating }}</td>
+            <td>{{ fav_restaurant.distance }}</td>
+            <td>{{ fav_restaurant.cuisine }}</td>
+         </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    
+    <script>
+    function sortTable(columnIndex) {
+        var table, rows, switching, i, x, y, shouldSwitch, direction, switchcount = 0;
+        table = document.getElementById("myTable");
+        switching = true;
+        direction = "asc"; 
+  
+        while (switching) {
+            switching = false;
+            rows = table.rows;
+    
+            for (i = 1; i < (rows.length - 1); i++) {
+                    shouldSwitch = false;
+                    x = rows[i].getElementsByTagName("TD")[columnIndex];
+                    y = rows[i + 1].getElementsByTagName("TD")[columnIndex];
+            
+                if (direction == "asc") {
+                    if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+                    shouldSwitch = true;
+                    break;
+                    }
+                } else if (direction == "desc") {
+                    if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
+                    shouldSwitch = true;
+                    break;
+                    }
+                }
+            }
+            if (shouldSwitch) {
+                rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+                switching = true;
+                switchcount++;
+            } else {
+                if (switchcount == 0 && direction == "asc") {
+                direction = "desc";
+                switching = true;
+                }
+            }
+        }
+    }
+    </script>
+    
 </div>
-{% endblock %}
+{% endblock  %}

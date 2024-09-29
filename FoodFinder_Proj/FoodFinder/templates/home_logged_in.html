@@ -169,10 +169,10 @@
                         const halfStar = rating % 1 >= 0.5 ? 1 : 0;
                         const emptyStars = 5 - fullStars - halfStar;
                 
-                        const starHTML = '★'.repeat(fullStars) +
-                                         (halfStar ? '½' : '') +
-                                         '☆'.repeat(emptyStars);
-                
+                        const starHTML = '<i class="material-icons" style="color:#434343; font-size:16px; vertical-align:-2.5px;">star</i>'.repeat(fullStars) +
+                            (halfStar ? '<i class="material-icons" style="color:#434343; font-size:16px; vertical-align:-2.5px;">star_half</i>' : '') +
+                            '<i class="material-icons" style="color:#434343; font-size:16px; vertical-align:-2.5px;">star_border</i>'.repeat(emptyStars);
+
                         const distance = calculateDistance(place.geometry.location, userPosition);
                         place.distance = distance; // Store distance for sorting
                 
@@ -208,7 +208,20 @@
                         });
                 
                         card.innerHTML = `
-                            <h3>${place.name}</h3>
+                            <h3 style="display: inline;">${place.name}</h3>
+                            
+                            <form method="post" action="{% url 'add_favorite' id %}">
+                                {% csrf_token %}
+                                <button type="submit" name="favButton" style="float: right;" class="favorite-icons" title="Favorite" aria-label="Favorite">
+                                {% if user in restaurant.favorites.all %}
+                                    <i class="material-icons">favorite</i>
+                                {% else %}
+                                    <i class="material-icons">favorite_outlined</i>
+                                {% endif %}
+                            </button>
+                                
+                            </form>
+                            
                             <p>Rating: ${starHTML} (${place.user_ratings_total || 0} reviews)</p>
                             <p>Distance: ${distance} mi</p>
                             <p class="toggle-details" style="cursor:pointer; color:blue;">Show Details</p>
@@ -361,10 +374,10 @@
                     const halfStar = rating % 1 >= 0.5 ? 1 : 0;
                     const emptyStars = 5 - fullStars - halfStar;
 
-                    const starHTML = '★'.repeat(fullStars) + 
-                                    (halfStar ? '½' : '') + 
-                                    '☆'.repeat(emptyStars);
-
+                    const starHTML = '<i class="material-icons" style="color:#434343; font-size:16px; vertical-align:-2.5px;">star</i>'.repeat(fullStars) +
+                        (halfStar ? '<i class="material-icons" style="color:#434343; font-size:16px; vertical-align:-2.5px;">star_half</i>' : '') +
+                        '<i class="material-icons" style="color:#434343; font-size:16px; vertical-align:-2.5px;">star_border</i>'.repeat(emptyStars);
+                    
                     return `
                         <li id="review-${index}">
                             <div style="display:flex; align-items:center;">
