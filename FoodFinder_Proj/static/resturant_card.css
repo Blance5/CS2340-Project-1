@@ -138,7 +138,6 @@
 
 .left-container::-webkit-scrollbar {
     width: 10px;
-    scroll-padding-top: 20px;
 }
 
 .left-container::-webkit-scrollbar-track {
