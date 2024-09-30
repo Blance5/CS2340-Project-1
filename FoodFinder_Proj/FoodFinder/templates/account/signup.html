@@ -3,7 +3,12 @@
 {% block head_title %}
     {% trans "Signup" %}
 {% endblock head_title %}
+{% load static %}
+{% block css %}
+<link rel="stylesheet" href="{% static 'log.css' %}">
+{% endblock %}
 {% block content %}
+<div class="content">
     {% element h1 %}
         {% trans "Sign Up" %}
     {% endelement %}
@@ -32,5 +37,5 @@
             {% endslot %}
         {% endelement %}
     {% endif %}
-    
+</div>
 {% endblock content %}

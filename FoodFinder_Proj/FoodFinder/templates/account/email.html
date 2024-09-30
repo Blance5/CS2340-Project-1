@@ -3,6 +3,10 @@
 {% block head_title %}
     {% trans "Email Addresses" %}
 {% endblock head_title %}
+{% load static %}
+{% block css %}
+<link rel="stylesheet" href="{% static 'log.css' %}">
+{% endblock %}
 {% block content %}
     {% element h1 %}
         {% trans "Email Addresses TEST" %}
