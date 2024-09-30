@@ -6,18 +6,41 @@ from django.views.generic import TemplateView
 from django.contrib.auth import logout
 from django.shortcuts import redirect
 from django.contrib.auth.decorators import login_required
+from .models import Restaurant
+
 
 #def home_view(request):
- #   return redirect(request, 'home.html')
+#   return redirect(request, 'home.html')
+
 
 # View for logged in users
 @login_required  # Ensures only logged in users can access this view
 def home_logged_in(request):
+    if request.method == 'POST':
+        place_id = request.POST['place_id']
+
+        # Check if the restaurant already exists
+        if Restaurant.objects.filter(place_id=place_id).exists():
+            restaurant = Restaurant.objects.get(place_id=place_id)
+            if restaurant.favorites.filter(id=request.user.id).exists():
+                restaurant.favorites.remove(request.user)
+            else:
+                restaurant.favorites.add(request.user)
+        else:
+            name = request.POST['name']
+            rating = request.POST['rating']
+            newrestaurant = Restaurant.objects.create(place_id=place_id, name=name, rating=rating)
+            newrestaurant.favorites.add(request.user)
     return render(request, 'home_logged_in.html')
 
 @login_required
 def profile_view(request):
-    return render(request, 'profile.html', {'user': request.user})
+    fav_restaurant = Restaurant.objects.filter(favorites=request.user)
+    context = {
+        'fav_restaurant': fav_restaurant,
+        'user': request.user
+    }
+    return render(request, 'profile.html', context)
 
 # View for logged out users
 def home_logged_out(request):
