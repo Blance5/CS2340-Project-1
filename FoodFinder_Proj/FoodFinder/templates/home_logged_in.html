@@ -61,6 +61,13 @@
                 let userPosition;
                 let markers = [];
 
+                function getUrlParameter(name) {
+                    name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
+                    var regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
+                    var results = regex.exec(location.search);
+                    return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
+                }
+                
                 function initMap() {
                     console.log("Google Maps API loaded.");
                     googleMapsApi = google;
@@ -71,19 +78,38 @@
                         center: defaultLocation,
                         zoom: 12,
                     });
-                    
-                    document.getElementById('search-form').addEventListener('submit', function(event) {
-                        console.log("Form submitted.");
-                        event.preventDefault();
-                        const query = document.getElementById('search-query').value;
-                        searchRestaurants(query);
-                    });
                 
-                    // Add event listener for sorting
-                    document.getElementById('sort-select').addEventListener('change', function() {
-                        sortAndDisplayResults(this.value);
-                    });
+                    const restaurantName = getUrlParameter('restaurant_name');
+                
+                    if (restaurantName) {
+                        // If there's a specific restaurant to be shown, search only for that restaurant
+                        searchRestaurants(restaurantName, true);
+                    } else {
+                        // Attach search form event listener if it's a general search
+                        document.getElementById('search-form').addEventListener('submit', function(event) {
+                            console.log("Form submitted.");
+                            event.preventDefault();
+                            const query = document.getElementById('search-query').value;
+                            searchRestaurants(query);
+                        });
+                
+                        // Add event listener for sorting
+                        document.getElementById('sort-select').addEventListener('change', function() {
+                            sortAndDisplayResults(this.value);
+                        });
+                    }
                 }
+                
+                // Function to initialize Google Maps API when the page loads
+                function loadGoogleMapsApi() {
+                    const script = document.createElement('script');
+                    script.src = 'https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places,geometry&callback=initMap';
+                    script.async = true;
+                    script.defer = true;
+                    document.head.appendChild(script);
+                }
+                
+                window.onload = loadGoogleMapsApi;
 
                 document.getElementById('search-form').addEventListener('submit', function(event) {
                     event.preventDefault(); // Prevent the default form submission
@@ -107,27 +133,35 @@
                 }
                 
 
-                function searchRestaurants(query) {
+                function searchRestaurants(query, specificRestaurant = false) {
                     console.log("Searching for restaurants:", query);
                     if (navigator.geolocation) {
-                        navigator.geolocation.getCurrentPosition(function(position) {
+                        navigator.geolocation.getCurrentPosition(function (position) {
                             userPosition = position;
-                            const userLocation = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
-                            
-                            // Get the search radius value and convert it to meters
+                            const userLocation = new google.maps.LatLng(
+                                position.coords.latitude,
+                                position.coords.longitude
+                            );
+                
                             const radiusInMiles = document.getElementById('search-radius').value;
-                            const radiusInMeters = radiusInMiles * 1609.34; // 1 mile = 1609.34 meters
-                            
+                            const radiusInMeters = radiusInMiles * 1609.34;
+                
                             const request = {
                                 location: userLocation,
-                                radius: radiusInMeters.toString(), // Convert to string as required by the API
+                                radius: radiusInMeters.toString(),
                                 type: ['restaurant'],
                                 keyword: query,
                                 fields: ['name', 'geometry', 'place_id', 'rating', 'user_ratings_total', 'vicinity', 'price_level']
                             };
                 
-                            placesService.nearbySearch(request, function(results, status) {
+                            placesService.nearbySearch(request, function (results, status) {
                                 if (status === google.maps.places.PlacesServiceStatus.OK) {
+                                    if (specificRestaurant) {
+                                        // Filter results to show only the specific restaurant
+                                        results = results.filter(
+                                            (place) => place.name.toLowerCase() === query.toLowerCase()
+                                        );
+                                    }
                                     currentResults = results;
                                     displayResults(results);
                                 } else {
@@ -135,7 +169,7 @@
                                     displayNoResults(status);
                                 }
                             });
-                        }, function(error) {
+                        }, function (error) {
                             console.log('Geolocation error:', error);
                             displayError("Unable to get your location. Please make sure location services are enabled.");
                         });
@@ -172,7 +206,7 @@
                         const starHTML = '<i class="material-icons" style="color:#434343; font-size:16px; vertical-align:-2.5px;">star</i>'.repeat(fullStars) +
                             (halfStar ? '<i class="material-icons" style="color:#434343; font-size:16px; vertical-align:-2.5px;">star_half</i>' : '') +
                             '<i class="material-icons" style="color:#434343; font-size:16px; vertical-align:-2.5px;">star_border</i>'.repeat(emptyStars);
-
+                
                         const distance = calculateDistance(place.geometry.location, userPosition);
                         place.distance = distance; // Store distance for sorting
                 
@@ -209,20 +243,13 @@
                 
                         card.innerHTML = `
                             <h3 style="display: inline;">${place.name}</h3>
-                           
-                            <form method="post">
-                               {% csrf_token %}
-                               <input type="hidden" name="place_id" value="${place.place_id}">
-                               <input type="hidden" name="name" value="${place.name}">
-                               <input type="hidden" name="rating" value="${rating}">
-                               <button type="submit" name="favButton" style="float: right;" class="favorite-icons" title="Favorite" aria-label="Favorite"> <i class="material-icons">favorite</i> </button>
-                            </form>
-                            
                             <p>Rating: ${starHTML} (${place.user_ratings_total || 0} reviews)</p>
                             <p>Distance: ${distance} mi</p>
                             <p class="toggle-details" style="cursor:pointer; color:blue;">Show Details</p>
+                            <button class="favorite-button" data-restaurant-id="${place.place_id}" data-restaurant-name="${place.name}">
+                                <i class="fa fa-heart-o" aria-hidden="true"></i> Favorite
+                            </button>
                             <div id="details-${index}" class="details" style="display:none;"></div>
-        
                         `;
                 
                         resultsList.appendChild(card); // Append card to the results list
@@ -244,6 +271,34 @@
                                 detailsDiv.style.display = 'none';
                                 resetMarkerToRed(marker); // Set marker back to red when the card is closed
                             }
+                        });
+                    });
+                
+                    // Add event listeners to the favorite buttons
+                    document.querySelectorAll('.favorite-button').forEach(button => {
+                        button.addEventListener('click', function(event) {
+                            event.preventDefault(); // Prevent page reload
+                            const restaurantId = this.getAttribute('data-restaurant-id');
+                            const restaurantName = this.getAttribute('data-restaurant-name');
+                
+                            // Send AJAX request to favorite/unfavorite the restaurant
+                            fetch("{% url 'favorite_restaurant' %}", {
+                                method: 'POST',
+                                headers: {
+                                    'X-CSRFToken': '{{ csrf_token }}',
+                                    'Content-Type': 'application/x-www-form-urlencoded'
+                                },
+                                body: `restaurant_id=${restaurantId}&restaurant_name=${restaurantName}`
+                            })
+                            .then(response => response.json())
+                            .then(data => {
+                                if (data.status === 'favorited') {
+                                    this.innerHTML = '<i class="fa fa-heart" aria-hidden="true"></i> Unfavorite';
+                                } else {
+                                    this.innerHTML = '<i class="fa fa-heart-o" aria-hidden="true"></i> Favorite';
+                                }
+                            })
+                            .catch(error => console.error('Error:', error));
                         });
                     });
                 

@@ -31,6 +31,7 @@ urlpatterns = [
     path('logout/', CustomLogoutView.as_view(), name='logout'),  # Custom logout view
     path('accounts/email/', views.CustomEmailView.as_view(), name='account_email'),  # Custom email view
     path('profile/', profile_view, name='profile'),  # Add the profile URL here
+    path('favorite/', views.favorite_restaurant, name='favorite_restaurant'),
 
     #[Issues] path('add_favorite/<int:place_id>/', views.add_favorite, name='add_favorite'),
 ]

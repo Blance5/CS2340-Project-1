@@ -5,8 +5,6 @@
 {% endblock %}
 {% block title %}Profile - FoodFinder{% endblock %}
 
-
-
 {% block content %}
 <div class="content">
     <h2>{{ user.username }}'s Profile</h2>
@@ -23,23 +21,26 @@
         {% if user.first_name and user.last_name %}
             {{ user.first_name }} {{user.last_name }}
         {% else %}
-            No name avaliable
+            No name available
         {% endif %}
+    </p>
 
     <p>Favorite Restaurants:</p>
     <table id="myTable">
         <thead>
             <tr>
-                <th onclick="sortTable(0)">Restaurant Name</th>
-                <th onclick="sortTable(1)">Rating</th>
+                <th onclick="sortTable(0)"></th>
             </tr>
         </thead>
         <tbody>
             {% for restaurant in fav_restaurant %}
-        <tr>
-            <td>{{ restaurant.name }}</td>
-            <td>{{ restaurant.rating }}</td>
-         </tr>
+                <tr>
+                    <td>
+                        <a href="{% url 'home_logged_in' %}?restaurant_name={{ restaurant.name|urlencode }}">
+                            {{ restaurant.name }}
+                        </a>
+                    </td>
+                </tr>
             {% endfor %}
         </tbody>
     </table>
@@ -50,25 +51,25 @@
         table = document.getElementById("myTable");
         switching = true;
         direction = "asc"; 
-  
+
         while (switching) {
             switching = false;
             rows = table.rows;
-    
+
             for (i = 1; i < (rows.length - 1); i++) {
-                    shouldSwitch = false;
-                    x = rows[i].getElementsByTagName("TD")[columnIndex];
-                    y = rows[i + 1].getElementsByTagName("TD")[columnIndex];
-            
+                shouldSwitch = false;
+                x = rows[i].getElementsByTagName("TD")[columnIndex];
+                y = rows[i + 1].getElementsByTagName("TD")[columnIndex];
+
                 if (direction == "asc") {
                     if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
-                    shouldSwitch = true;
-                    break;
+                        shouldSwitch = true;
+                        break;
                     }
                 } else if (direction == "desc") {
                     if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
-                    shouldSwitch = true;
-                    break;
+                        shouldSwitch = true;
+                        break;
                     }
                 }
             }
@@ -78,8 +79,8 @@
                 switchcount++;
             } else {
                 if (switchcount == 0 && direction == "asc") {
-                direction = "desc";
-                switching = true;
+                    direction = "desc";
+                    switching = true;
                 }
             }
         }
@@ -87,4 +88,4 @@
     </script>
     
 </div>
-{% endblock  %}
+{% endblock %}
