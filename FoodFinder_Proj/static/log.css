@@ -40,7 +40,7 @@ form {
     background: white;
     border-radius: 10px;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-    padding: 1.5rem; /* Reduced padding */
+    padding: 1rem; /* Reduced padding */
     max-width: 400px; /* Adjusted max-width */
     width: 100%;
     text-align: center;
