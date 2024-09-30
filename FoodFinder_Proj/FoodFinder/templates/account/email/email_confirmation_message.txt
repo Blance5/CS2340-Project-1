@@ -1,0 +1,10 @@
+Hello {{ user.username }},
+
+Please click the link below to verify your email address and complete the registration process:
+
+{{ activate_url }}
+
+If you didn't request this, please ignore this email.
+
+Thanks,
+The FoodFinder Team
