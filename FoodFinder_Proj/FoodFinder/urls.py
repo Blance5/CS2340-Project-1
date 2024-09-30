@@ -22,7 +22,6 @@ from django.contrib.auth.views import LogoutView
 from . import views
 from .views import CustomLogoutView, profile_view
 
-
 urlpatterns = [
     path('', views.home_redirect, name='home_redirect'),  # Home page view
     path('home_logged_in/', views.home_logged_in, name='home_logged_in'),
@@ -32,7 +31,6 @@ urlpatterns = [
     path('accounts/email/', views.CustomEmailView.as_view(), name='account_email'),  # Custom email view
     path('profile/', profile_view, name='profile'),  # Add the profile URL here
 
-    #[Issues] path('add_favorite/<int:place_id>/', views.add_favorite, name='add_favorite'),
 ]
 
 if settings.DEBUG:

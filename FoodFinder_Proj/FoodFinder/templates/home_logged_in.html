@@ -169,10 +169,10 @@
                         const halfStar = rating % 1 >= 0.5 ? 1 : 0;
                         const emptyStars = 5 - fullStars - halfStar;
                 
-                        const starHTML = '<i class="material-icons" style="color:#434343; font-size:16px; vertical-align:-2.5px;">star</i>'.repeat(fullStars) +
-                            (halfStar ? '<i class="material-icons" style="color:#434343; font-size:16px; vertical-align:-2.5px;">star_half</i>' : '') +
-                            '<i class="material-icons" style="color:#434343; font-size:16px; vertical-align:-2.5px;">star_border</i>'.repeat(emptyStars);
-
+                        const starHTML = '★'.repeat(fullStars) +
+                                         (halfStar ? '½' : '') +
+                                         '☆'.repeat(emptyStars);
+                
                         const distance = calculateDistance(place.geometry.location, userPosition);
                         place.distance = distance; // Store distance for sorting
                 
@@ -208,21 +208,11 @@
                         });
                 
                         card.innerHTML = `
-                            <h3 style="display: inline;">${place.name}</h3>
-                           
-                            <form method="post">
-                               {% csrf_token %}
-                               <input type="hidden" name="place_id" value="${place.place_id}">
-                               <input type="hidden" name="name" value="${place.name}">
-                               <input type="hidden" name="rating" value="${rating}">
-                               <button type="submit" name="favButton" style="float: right;" class="favorite-icons" title="Favorite" aria-label="Favorite"> <i class="material-icons">favorite</i> </button>
-                            </form>
-                            
+                            <h3>${place.name}</h3>
                             <p>Rating: ${starHTML} (${place.user_ratings_total || 0} reviews)</p>
                             <p>Distance: ${distance} mi</p>
                             <p class="toggle-details" style="cursor:pointer; color:blue;">Show Details</p>
                             <div id="details-${index}" class="details" style="display:none;"></div>
-        
                         `;
                 
                         resultsList.appendChild(card); // Append card to the results list
@@ -371,10 +361,10 @@
                     const halfStar = rating % 1 >= 0.5 ? 1 : 0;
                     const emptyStars = 5 - fullStars - halfStar;
 
-                    const starHTML = '<i class="material-icons" style="color:#434343; font-size:16px; vertical-align:-2.5px;">star</i>'.repeat(fullStars) +
-                        (halfStar ? '<i class="material-icons" style="color:#434343; font-size:16px; vertical-align:-2.5px;">star_half</i>' : '') +
-                        '<i class="material-icons" style="color:#434343; font-size:16px; vertical-align:-2.5px;">star_border</i>'.repeat(emptyStars);
-                    
+                    const starHTML = '★'.repeat(fullStars) + 
+                                    (halfStar ? '½' : '') + 
+                                    '☆'.repeat(emptyStars);
+
                     return `
                         <li id="review-${index}">
                             <div style="display:flex; align-items:center;">
