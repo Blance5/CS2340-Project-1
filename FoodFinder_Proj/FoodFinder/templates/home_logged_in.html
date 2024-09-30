@@ -191,22 +191,36 @@
                             document.querySelectorAll('.details').forEach(function(details) {
                                 details.style.display = 'none'; // Collapse all open details
                             });
-                
+
                             // Scroll to the current restaurant card
                             const card = document.getElementById(`restaurant-${index}`);
                             card.scrollIntoView({ behavior: 'smooth', block: 'start' }); // Scroll to the restaurant card
-                
+
                             // Expand the details of the current restaurant
                             const detailsDiv = document.getElementById(`details-${index}`);
                             if (detailsDiv.style.display === 'none') {
                                 detailsDiv.style.display = 'block'; // Show the details
                                 fetchAdditionalDetails(place.place_id, detailsDiv, place.name); // Fetch details if necessary
                             }
-                
+
                             // Change the current marker to blue and reset others to red
                             setActiveMarker(marker, index);
+
+                            // Get the marker's position and the current center
+                            const markerPosition = marker.getPosition();
+                            const currentCenter = map.getCenter();
+
+                            // Only pan if the marker is not already in the center
+                            if (currentCenter.lat() !== markerPosition.lat() || currentCenter.lng() !== markerPosition.lng()) {
+                                map.panTo(markerPosition); // Smoothly pan to the marker's position
+                            }
+
+                            // Set the zoom level after panning to prevent jumping
+                            setTimeout(() => {
+                                map.setZoom(15); // Adjust the zoom level to 15
+                            }, 100); // Delay the zoom adjustment slightly
                         });
-                
+
                         card.innerHTML = `
                             <h3 style="display: inline;">${place.name}</h3>
                            
@@ -229,20 +243,44 @@
                 
                         // Add click event to toggle details
                         card.querySelector('.toggle-details').addEventListener('click', function() {
-                            // Collapse all other details
-                            document.querySelectorAll('.details').forEach(function(detailsDiv) {
-                                detailsDiv.style.display = 'none'; // Collapse all details
-                            });
-                
-                            // Show details for this card
+                            // Get the current details div for this card
                             const detailsDiv = document.getElementById(`details-${index}`);
-                            if (detailsDiv.style.display === 'none') {
-                                detailsDiv.style.display = 'block';
+                            
+                            // Get the current button
+                            const toggleButton = card.querySelector('.toggle-details');
+
+                            // Check if the current details are already open
+                            const isCurrentlyOpen = detailsDiv.style.display === 'block';
+
+                            // Collapse all other details except the current one
+                            document.querySelectorAll('.details').forEach(function(div) {
+                                div.style.display = 'none'; // Collapse all details
+                            });
+
+                            // Toggle the current card's details
+                            if (isCurrentlyOpen) {
+                                detailsDiv.style.display = 'none'; // Hide current details
+                                toggleButton.textContent = 'Show Details'; // Change button text back to "Show Details"
+                                resetMarkerToRed(marker); // Set marker back to red when the card is closed
+                            } else {
+                                detailsDiv.style.display = 'block'; // Show current details
+                                toggleButton.textContent = 'Hide Details'; // Change button text to "Hide Details"
                                 fetchAdditionalDetails(place.place_id, detailsDiv, place.name);
                                 setActiveMarker(marker, index); // Set marker to blue
-                            } else {
-                                detailsDiv.style.display = 'none';
-                                resetMarkerToRed(marker); // Set marker back to red when the card is closed
+
+                                // Smoothly pan to the marker instead of jumping
+                                const markerPosition = marker.getPosition();
+                                const currentCenter = map.getCenter();
+
+                                // Only pan if the marker is not already in the center
+                                if (currentCenter.lat() !== markerPosition.lat() || currentCenter.lng() !== markerPosition.lng()) {
+                                    map.panTo(markerPosition); // Smoothly pan to the marker's position
+                                }
+
+                                // Set the zoom level after panning to prevent jumping
+                                setTimeout(() => {
+                                    map.setZoom(15); // Adjust the zoom level to 15
+                                }, 100); // Delay the zoom adjustment slightly
                             }
                         });
                     });
@@ -345,15 +383,21 @@
                                     moreButton.addEventListener('click', function() {
                                         const fullReview = detailsDiv.querySelector(`#review-${index} .full-review`);
                                         const reviewTextElement = detailsDiv.querySelector(`#review-text-${index}`);
-                            
-                                        // Append the full review text to the existing text
-                                        reviewTextElement.innerHTML = reviewTextElement.innerHTML.replace('...', '') + ' ' + fullReview.innerHTML;
+                                        
+                                        // Only append the part of the full review that is not already displayed
+                                        const partialText = reviewTextElement.innerHTML.replace('...', '').trim();  // Remove '...' and trim the string
+                                        const fullReviewText = fullReview.innerHTML.trim();
+
+                                        if (!partialText.includes(fullReviewText)) {
+                                            const remainingText = fullReviewText.substring(partialText.length);  // Get the rest of the full review
+                                            reviewTextElement.innerHTML = partialText + remainingText;  // Append the remaining text
+                                        }
+
                                         fullReview.style.display = 'none'; // Hide the full review text
                                         moreButton.style.display = 'none'; // Hide the "More" button
                                     });
                                 }
                             });
-                            
                         } else {
                             detailsDiv.innerHTML = `<p>Error fetching details: ${status}</p>`;
                         }
