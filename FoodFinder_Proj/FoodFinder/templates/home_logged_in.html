@@ -253,7 +253,12 @@
                             setTimeout(() => {
                                 map.setZoom(15); // Adjust the zoom level to 15
                             }, 100); // Delay the zoom adjustment slightly
+
+                            // Update the toggle button text to "Hide Details"
+                            const toggleButton = card.querySelector('.toggle-details');
+                            toggleButton.textContent = 'Hide Details'; // Change button text to "Hide Details"
                         });
+
 
                         card.innerHTML = `
                             <h3 style="display: inline;">${place.name}</h3>
