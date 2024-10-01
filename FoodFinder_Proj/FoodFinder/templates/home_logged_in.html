@@ -282,15 +282,18 @@
                             
                             // Get the current button
                             const toggleButton = card.querySelector('.toggle-details');
-
+                        
                             // Check if the current details are already open
                             const isCurrentlyOpen = detailsDiv.style.display === 'block';
-
-                            // Collapse all other details except the current one
+                        
+                            // Collapse all other details and change their buttons to "Show Details"
                             document.querySelectorAll('.details').forEach(function(div) {
-                                div.style.display = 'none'; // Collapse all details
+                                div.style.display = 'none';
                             });
-
+                            document.querySelectorAll('.toggle-details').forEach(function(button) {
+                                button.textContent = 'Show Details';
+                            });
+                        
                             // Toggle the current card's details
                             if (isCurrentlyOpen) {
                                 detailsDiv.style.display = 'none'; // Hide current details
@@ -301,16 +304,16 @@
                                 toggleButton.textContent = 'Hide Details'; // Change button text to "Hide Details"
                                 fetchAdditionalDetails(place.place_id, detailsDiv, place.name);
                                 setActiveMarker(marker, index); // Set marker to blue
-
+                        
                                 // Smoothly pan to the marker instead of jumping
                                 const markerPosition = marker.getPosition();
                                 const currentCenter = map.getCenter();
-
+                        
                                 // Only pan if the marker is not already in the center
                                 if (currentCenter.lat() !== markerPosition.lat() || currentCenter.lng() !== markerPosition.lng()) {
                                     map.panTo(markerPosition); // Smoothly pan to the marker's position
                                 }
-
+                        
                                 // Set the zoom level after panning to prevent jumping
                                 setTimeout(() => {
                                     map.setZoom(15); // Adjust the zoom level to 15
@@ -416,7 +419,7 @@
                 
                             detailsDiv.innerHTML = `
                                 <p>Address: ${address}</p>
-                                <p>Contact: ${phone}</p>
+                                <p>Contact: ${phone}</p>                          
                                 <p>Rating: ${rating}</p>
                                 <button class="get-directions" 
                                         style="margin-top: 10px; cursor: pointer; color: black;"
