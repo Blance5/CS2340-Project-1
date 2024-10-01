@@ -32,6 +32,7 @@ urlpatterns = [
     path('accounts/email/', views.CustomEmailView.as_view(), name='account_email'),  # Custom email view
     path('profile/', profile_view, name='profile'),  # Add the profile URL here
     path('favorite/', views.favorite_restaurant, name='favorite_restaurant'),
+    path('unfavorite/', views.unfavorite_restaurant, name='unfavorite_restaurant'),
 
     #[Issues] path('add_favorite/<int:place_id>/', views.add_favorite, name='add_favorite'),
 ]
