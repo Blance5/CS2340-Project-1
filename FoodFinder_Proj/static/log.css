@@ -195,8 +195,32 @@ footer {
     background-color: #333;
     color: white;
     text-align: center;
-    position: fixed;
+    position: relative;
     bottom: 0;
     width: 100%;
     font-size: 12px;
+}
+
+table {
+  border-spacing: 0;
+  width: 70%;
+  border: 1px solid #ddd;
+}
+
+th {
+}
+
+th.sortable {
+    cursor: pointer;
+}
+
+
+th, td {
+  text-align: left;
+  padding: 16px;
+}
+
+
+tr:nth-child(even) {
+  background-color: #f2f2f2
 }
