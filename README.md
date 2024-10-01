@@ -4,7 +4,9 @@ Food Finder is a web-based application designed to help users discover new resta
 Features
 
 Refinable Search Results: Filter restaurant options by distance, rating, and more.
+
 Interactive Map: A large map allows users to see restaurant locations at a glance and explore new options in their area.
+
 User Favorites: Registered users can save their favorite restaurants for easy access.
 
 **Project Links**
@@ -23,7 +25,9 @@ The GitHub repo contains all source code for the project, including backend, fro
 Getting Started
 
 Prerequisites
+
 To run the project locally, you'll need:
+
 Python 3.10+ installed
 Django 4.x
 
