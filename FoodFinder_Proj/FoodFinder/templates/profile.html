@@ -34,11 +34,16 @@
         </thead>
         <tbody>
             {% for restaurant in fav_restaurant %}
-                <tr>
+                <tr style="height: 55px;">  <!-- Adjusted row height -->
                     <td>
                         <a href="{% url 'home_logged_in' %}?restaurant_name={{ restaurant.name|urlencode }}">
                             {{ restaurant.name }}
                         </a>
+                        <form method="post" action="{% url 'unfavorite_restaurant' %}" style="display: inline;">
+                            {% csrf_token %}
+                            <input type="hidden" name="restaurant_id" value="{{ restaurant.id }}">
+                            <button type="submit" class="unfavorite-button" style="color: red;">X</button>
+                        </form>
                     </td>
                 </tr>
             {% endfor %}

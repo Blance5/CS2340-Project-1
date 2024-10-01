@@ -16,6 +16,23 @@ from django.contrib.auth.decorators import login_required
 #   return redirect(request, 'home.html')
 
 @login_required
+def unfavorite_restaurant(request):
+    if request.method == 'POST':
+        restaurant_id = request.POST.get('restaurant_id')
+
+        # Get the favorite restaurants list from the session, or initialize if not present
+        favorite_restaurants = request.session.get('favorite_restaurants', [])
+
+        # Remove the restaurant from the favorite list
+        favorite_restaurants = [r for r in favorite_restaurants if r['id'] != restaurant_id]
+
+        # Save the updated favorites list back to the session
+        request.session['favorite_restaurants'] = favorite_restaurants
+        request.session.modified = True  # Mark the session as modified
+
+    return redirect('profile')
+
+@login_required
 @csrf_exempt
 def favorite_restaurant(request):
     if request.method == 'POST':
