@@ -29,6 +29,7 @@ Prerequisites
 To run the project locally, you'll need:
 
 Python 3.10+ installed
+
 Django 4.x
 
 **Contributors**
