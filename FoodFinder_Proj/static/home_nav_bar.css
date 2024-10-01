@@ -139,20 +139,6 @@ button.get-directions:hover {
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Shadow effect on hover */
 }
 
-/* Modern styling for the get-directions button */
-button.favorite-icons {
-    display: inline-block;
-    padding: 5px 10px; /* Space inside the button */
-    cursor: pointer; /* Change cursor on hover */
-    transition: background-color 0.3s ease, box-shadow 0.3s ease; /* Smooth transition for effects */
-    box-sizing: border-box; /* Ensure padding is included in the total width */
-    border-radius: 15px; /* Rounded edges */
-}
-
-button.favorite-icons:hover {
-    background-color: red
-}
-
 button {
     border-radius: 15px; /* Rounded edges */
 }
@@ -190,6 +176,22 @@ button[type="submit"]:active {
     transition: background-color 0.5s ease, box-shadow 0.5s ease; /* Ensure hover and active states have smooth transition */
 }
 
+button.favorite-button {
+    padding: 5px 10px; /* Space inside the button */
+    display: flex;
+    align-items: center;
+    cursor: pointer; /* Change cursor on hover */
+    transition: background-color 0.3s ease, box-shadow 0.3s ease; /* Smooth transition for effects */
+    box-sizing: border-box; /* Ensure padding is included in the total width */
+    border-radius: 15px; /* Rounded edges */
+}
+
+button.favorite-button i {
+    color: red;
+    font-size: 24px; /* Adjust this value to change the icon size */
+    margin-right: 5px; /* Space between icon and text */
+}
+
 footer {
     background-color: #333;
     color: white;
@@ -200,11 +202,9 @@ footer {
     font-size: 12px;
 }
 
+
 #map, #results-list {
     border: 2px solid black;
     padding: 0;
     box-sizing: border-box;
-}
-    border: 2px solid black; /* Black border */
-    padding: 0; /* No padding */
 }

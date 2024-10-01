@@ -197,7 +197,8 @@
                         const card = document.createElement('div');
                         card.className = 'restaurant-card';
                         card.id = `restaurant-${index}`;
-                
+                        
+                        const addressInput = place.formatted_address
                         const rating = place.rating || 0;
                         const fullStars = Math.floor(rating);
                         const halfStar = rating % 1 >= 0.5 ? 1 : 0;
@@ -253,16 +254,22 @@
                             setTimeout(() => {
                                 map.setZoom(15); // Adjust the zoom level to 15
                             }, 100); // Delay the zoom adjustment slightly
+
+                            // Update the toggle button text to "Hide Details"
+                            const toggleButton = card.querySelector('.toggle-details');
+                            toggleButton.textContent = 'Hide Details'; // Change button text to "Hide Details"
                         });
+
 
                         card.innerHTML = `
                             <h3 style="display: inline;">${place.name}</h3>
+                            <button style="float: right;" class="favorite-button" data-restaurant-id="${place.place_id}" data-restaurant-name="${place.name}" data-restaurant-rating="${rating}" data-restaurant-address="${addressInput}">
+                                <i class="material-icons">favorite</i>  Favorite
+                            </button>
                             <p>Rating: ${starHTML} (${place.user_ratings_total || 0} reviews)</p>
                             <p>Distance: ${distance} mi</p>
                             <p class="toggle-details" style="cursor:pointer; color:blue;">Show Details</p>
-                            <button class="favorite-button" data-restaurant-id="${place.place_id}" data-restaurant-name="${place.name}">
-                                <i class="fa fa-heart-o" aria-hidden="true"></i> Favorite
-                            </button>
+                            
                             <div id="details-${index}" class="details" style="display:none;"></div>
                         `;
                 
@@ -321,6 +328,7 @@
                             event.preventDefault(); // Prevent page reload
                             const restaurantId = this.getAttribute('data-restaurant-id');
                             const restaurantName = this.getAttribute('data-restaurant-name');
+                            const restaurantRating = this.getAttribute('data-restaurant-rating');
                 
                             // Send AJAX request to favorite/unfavorite the restaurant
                             fetch("{% url 'favorite_restaurant' %}", {
@@ -329,14 +337,14 @@
                                     'X-CSRFToken': '{{ csrf_token }}',
                                     'Content-Type': 'application/x-www-form-urlencoded'
                                 },
-                                body: `restaurant_id=${restaurantId}&restaurant_name=${restaurantName}`
+                                body: 'restaurant_id=${restaurantId}&restaurant_name=${restaurantName}&restaurant_rating=${restaurantRating}'
                             })
                             .then(response => response.json())
                             .then(data => {
                                 if (data.status === 'favorited') {
-                                    this.innerHTML = '<i class="fa fa-heart" aria-hidden="true"></i> Unfavorite';
+                                    this.innerHTML = '<i class="material-icons">favorite_border</i> Unfavorite';
                                 } else {
-                                    this.innerHTML = '<i class="fa fa-heart-o" aria-hidden="true"></i> Favorite';
+                                    this.innerHTML = '<i class="material-icons">favorite</i> Favorite';
                                 }
                             })
                             .catch(error => console.error('Error:', error));
@@ -376,7 +384,11 @@
                             const address = placeDetails.formatted_address || 'Address not available';
                             const phone = placeDetails.formatted_phone_number || 'Contact info not available';
                             const rating = placeDetails.rating || 'Rating not available';
+                            
+                            
                             const reviews = placeDetails.reviews || [];
+                            
+                            
                             const latitude = placeDetails.geometry?.location?.lat();
                             const longitude = placeDetails.geometry?.location?.lng();
 
@@ -403,6 +415,7 @@
                             }
                 
                             const cuisineType = determineCuisine(place_name);
+                          
                 
                             detailsDiv.innerHTML = `
                                 <p>Address: ${address}</p>

@@ -19,7 +19,6 @@
     </p>
     <p><strong>Name:</strong>
         {% if user.first_name and user.last_name %}
-            {{ user.first_name }} {{user.last_name }}
         {% else %}
             No name available
         {% endif %}
@@ -29,7 +28,8 @@
     <table id="myTable">
         <thead>
             <tr>
-                <th onclick="sortTable(0)"></th>
+                <th class="sortable" onclick="sortTable(0)">Restaurant Name <i class="material-icons" style="vertical-align:-3.5px; font-size:18px;">swap_vert</i> </th>
+                <th class="sortable" onclick="sortTable(1)">Rating <i class="material-icons" style="vertical-align:-3.5px; font-size:18px;">swap_vert</i>  </th>
             </tr>
         </thead>
         <tbody>
@@ -45,6 +45,7 @@
                             <button type="submit" class="unfavorite-button" style="color: red;">X</button>
                         </form>
                     </td>
+                        <td> {{ restaurant.rating }} </td>
                 </tr>
             {% endfor %}
         </tbody>
@@ -91,6 +92,5 @@
         }
     }
     </script>
-    
 </div>
 {% endblock %}

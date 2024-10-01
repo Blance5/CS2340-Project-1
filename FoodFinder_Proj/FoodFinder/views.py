@@ -81,7 +81,8 @@ def home_logged_in(request):
         else:
             name = request.POST['name']
             rating = request.POST['rating']
-            newrestaurant = Restaurant.objects.create(place_id=place_id, name=name, rating=rating)
+            address = request.POST['address']
+            newrestaurant = Restaurant.objects.create(place_id=place_id, name=name, rating=rating, address=address)
             newrestaurant.favorites.add(request.user)
     return render(request, 'home_logged_in.html')
 
