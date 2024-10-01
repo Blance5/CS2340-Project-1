@@ -15,6 +15,18 @@ from django.contrib.auth.decorators import login_required
 #def home_view(request):
 #   return redirect(request, 'home.html')
 
+
+def check_favorite_status(request, place_id):
+    user = request.user
+
+    try:
+        restaurant = Restaurant.objects.get(place_id=place_id)
+        is_favorited = restaurant.filter(id=user.id).exists()
+    except Restaurant.DoesNotExist:
+        is_favorited = False
+    return JsonResponse({'is_favorited': is_favorited})
+
+
 @login_required
 @csrf_exempt
 def favorite_restaurant(request):
@@ -64,8 +76,7 @@ def home_logged_in(request):
         else:
             name = request.POST['name']
             rating = request.POST['rating']
-            address = request.POST['address']
-            newrestaurant = Restaurant.objects.create(place_id=place_id, name=name, rating=rating, address=address)
+            newrestaurant = Restaurant.objects.create(place_id=place_id, name=name, rating=rating)
             newrestaurant.favorites.add(request.user)
     return render(request, 'home_logged_in.html')
 
