@@ -1,7 +1,8 @@
 **Project Overview**
 
 Food Finder is a web-based application designed to help users discover new restaurants in their area. The app provides an interactive map that displays restaurant locations and allows users to search, filter results by ratings, and save their favorite spots for future visits. The platform is built with user experience in mind, making it simple and intuitive to find the perfect restaurant.
-Features
+
+**Features**
 
 Refinable Search Results: Filter restaurant options by distance, rating, and more.
 
