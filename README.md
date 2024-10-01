@@ -36,9 +36,13 @@ Django 4.x
 **Contributors**
 
 Benjamin Lance (Scrum Master, Back-End Developer)
+
 Leo Hollingworth (Product Owner, Full-Stack Developer)
+
 David Izadi (Front-End Developer)
+
 Blake Alford (Front-End Developer)
+
 Lawrence Williams (Full-Stack Developer)
-Benjamin Lance (Back-End Developer)
+
 
