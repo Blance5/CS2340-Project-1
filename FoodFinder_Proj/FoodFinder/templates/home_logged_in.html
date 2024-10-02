@@ -264,7 +264,7 @@
                         card.innerHTML = `
                             <h3 style="display: inline;">${place.name}</h3>
                             <button style="float: right;" class="favorite-button" data-restaurant-id="${place.place_id}" data-restaurant-name="${place.name}" data-restaurant-rating="${rating}" data-restaurant-address="${addressInput}">
-                                <i class="material-icons">favorite</i>  Favorite
+                                <i class="material-icons">favorite_border</i>  Favorite
                             </button>
                             <p>Rating: ${starHTML} (${place.user_ratings_total || 0} reviews)</p>
                             <p>Distance: ${distance} mi</p>
@@ -342,9 +342,9 @@
                             .then(response => response.json())
                             .then(data => {
                                 if (data.status === 'favorited') {
-                                    this.innerHTML = '<i class="material-icons">favorite_border</i> Unfavorite';
+                                    this.innerHTML = '<i class="material-icons">favorite</i> Unfavorite';
                                 } else {
-                                    this.innerHTML = '<i class="material-icons">favorite</i> Favorite';
+                                    this.innerHTML = '<i class="material-icons">favorite_border</i> Favorite';
                                 }
                             })
                             .catch(error => console.error('Error:', error));
