@@ -39,10 +39,12 @@
                         <a href="{% url 'home_logged_in' %}?restaurant_name={{ restaurant.name|urlencode }}">
                             {{ restaurant.name }}
                         </a>
-                        <form method="post" action="{% url 'unfavorite_restaurant' %}" style="display: inline;">
+                        <form method="post" action="{% url 'unfavorite_restaurant' %}" style="background: none; display: inline;">
                             {% csrf_token %}
-                            <input type="hidden" name="restaurant_id" value="{{ restaurant.id }}">
-                            <button type="submit" class="unfavorite-button" style="color: red;">X</button>
+                            <input type="hidden" name="restaurant_id" value="{{ restaurant.place_id }}">
+                            <button  class="favorite-button" style="cursor:pointer; background: none; color: red;"> 
+                                <i class="material-icons">close</i> 
+                            </button>
                         </form>
                     </td>
                         <td> {{ restaurant.rating }} </td>
