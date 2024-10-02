@@ -8,7 +8,11 @@ Refinable Search Results: Filter restaurant options by distance, rating, and mor
 
 Interactive Map: A large map allows users to see restaurant locations at a glance and explore new options in their area.
 
-User Favorites: Registered users can save their favorite restaurants for easy access.
+User Favorites: Registered users can save their favorite restaurants for easy access, accessible even after logging out.
+
+Restaurant Details: View restaurant address, contact info, cuisine type, ratings, and reviews.
+
+Password Reset: Easily reset your password if forgotten.
 
 **Project Links**
 
