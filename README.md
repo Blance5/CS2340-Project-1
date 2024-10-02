@@ -25,7 +25,7 @@ Team Website:
 This website showcases the features and overall design of the Food Finder app.
 
 GitHub Repository:
-[GitHub Repository](https://github.com/Blance5/CS2340-Project-1/tree/David2)
+[GitHub Repository](https://github.com/Blance5/CS2340-Project-1/tree/main)
 The GitHub repo contains all source code for the project, including backend, frontend, and API integration work.
 Getting Started
 
