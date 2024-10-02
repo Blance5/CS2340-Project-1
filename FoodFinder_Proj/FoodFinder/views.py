@@ -15,6 +15,18 @@ from django.contrib.auth.decorators import login_required
 #def home_view(request):
 #   return redirect(request, 'home.html')
 
+
+def check_favorite_status(request, place_id):
+    user = request.user
+
+    try:
+        restaurant = Restaurant.objects.get(place_id=place_id)
+        is_favorited = restaurant.filter(id=user.id).exists()
+    except Restaurant.DoesNotExist:
+        is_favorited = False
+    return JsonResponse({'is_favorited': is_favorited})
+
+
 @login_required
 def unfavorite_restaurant(request):
     if request.method == 'POST':

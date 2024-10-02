@@ -197,7 +197,7 @@
                         const card = document.createElement('div');
                         card.className = 'restaurant-card';
                         card.id = `restaurant-${index}`;
-                        
+
                         const addressInput = place.formatted_address
                         const rating = place.rating || 0;
                         const fullStars = Math.floor(rating);
@@ -268,8 +268,8 @@
                             </button>
                             <p>Rating: ${starHTML} (${place.user_ratings_total || 0} reviews)</p>
                             <p>Distance: ${distance} mi</p>
-                            <p class="toggle-details" style="cursor:pointer; color:blue;">Toggle Details</p>
-                            
+                            <p class="toggle-details" style="cursor:pointer; color:blue;">Show Details</p>
+
                             <div id="details-${index}" class="details" style="display:none;"></div>
                         `;
                 
@@ -321,7 +321,7 @@
                             }
                         });
                     });
-                
+
                     // Add event listeners to the favorite buttons
                     document.querySelectorAll('.favorite-button').forEach(button => {
                         button.addEventListener('click', function(event) {
@@ -329,7 +329,7 @@
                             const restaurantId = this.getAttribute('data-restaurant-id');
                             const restaurantName = this.getAttribute('data-restaurant-name');
                             const restaurantRating = this.getAttribute('data-restaurant-rating');
-                
+
                             // Send AJAX request to favorite/unfavorite the restaurant
                             fetch("{% url 'favorite_restaurant' %}", {
                                 method: 'POST',
@@ -384,11 +384,11 @@
                             const address = placeDetails.formatted_address || 'Address not available';
                             const phone = placeDetails.formatted_phone_number || 'Contact info not available';
                             const rating = placeDetails.rating || 'Rating not available';
-                            
-                            
+
+
                             const reviews = placeDetails.reviews || [];
-                            
-                            
+
+
                             const latitude = placeDetails.geometry?.location?.lat();
                             const longitude = placeDetails.geometry?.location?.lng();
 
@@ -415,8 +415,7 @@
                             }
                 
                             const cuisineType = determineCuisine(place_name);
-                          
-                
+
                             detailsDiv.innerHTML = `
                                 <p>Address: ${address}</p>
                                 <p>Contact: ${phone}</p>                          
@@ -427,15 +426,51 @@
                                     Get Directions
                                 </button>
 
+                                <button class="get-directions add-review" style="margin-top: 10px; cursor: pointer; color: black;">Add Review</button>
+
+                                <div id="reviewModal" class="modal" style="display: none;">
+                                    <div class="modal-content">
+                                        <span class="close">&times;</span>
+                                        <h2>Add a Review</h2>
+                                        <textarea id="reviewText" rows="4" cols="50" placeholder="Write your review here..."></textarea>
+                                        <button class="submit-review" style="margin-top: 10px; cursor: pointer; color: black;">Submit</button>
+                                    </div>
+                                </div>
+
+
                                 <h4>Reviews:</h4>
                                 <div class="reviews-container">
                                     <ul>
                                         ${reviews.map((review, index) => createReviewItem(review, index)).join('')}
                                     </ul>
                                 </div>
+
                                 <button class="collapse-details" style="margin-top: 10px; cursor: pointer; color: black;">Collapse</button>
                             `;
+                            
+                            const modal = document.getElementById("reviewModal");
+                            const addreviewbtn = document.querySelector(".add-review");
+                            const addreviewspan = document.getElementsByClassName("close")[0];
+                            const submitBtn = document.getElementById("submitReview");
 
+                            addreviewbtn.onclick = function() {
+                                modal.style.display = "block";
+                            }
+
+                            addreviewspan.onclick = function() {
+                                modal.style.display = "none";
+                            }
+
+                            window.onclick = function(event) {
+                                if (event.target == modal) {
+                                    modal.style.display = "none";
+                                }
+                            }
+                            
+                            submitBtn.onclick = function() {
+                                modal.style.display = "none";
+                            }
+                            
                             detailsDiv.querySelector('.reviews-container').offsetHeight;
                 
                             // Add event listener for collapse button
@@ -538,7 +573,7 @@
 
                 function displayNoResults(status) {
                     const resultsList = document.getElementById('results-list');
-                    resultsList.innerHTML = `<p>No restaurants found. (Status: ${status}) - REMOVE IN PROD</p>`;
+                    resultsList.innerHTML = `<p>No restaurants found.</p>`;
                     document.getElementById('sort-options').style.display = 'none';
                 }
 
