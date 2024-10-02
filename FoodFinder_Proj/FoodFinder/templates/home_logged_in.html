@@ -257,7 +257,7 @@
 
                             // Update the toggle button text to "Hide Details"
                             const toggleButton = card.querySelector('.toggle-details');
-                            toggleButton.textContent = 'Hide Details'; // Change button text to "Hide Details"
+                            toggleButton.textContent = 'Toggle Details'; // Change button text to "Hide Details"
                         });
 
 
@@ -268,7 +268,7 @@
                             </button>
                             <p>Rating: ${starHTML} (${place.user_ratings_total || 0} reviews)</p>
                             <p>Distance: ${distance} mi</p>
-                            <p class="toggle-details" style="cursor:pointer; color:blue;">Show Details</p>
+                            <p class="toggle-details" style="cursor:pointer; color:blue;">Toggle Details</p>
                             
                             <div id="details-${index}" class="details" style="display:none;"></div>
                         `;
@@ -286,22 +286,22 @@
                             // Check if the current details are already open
                             const isCurrentlyOpen = detailsDiv.style.display === 'block';
                         
-                            // Collapse all other details and change their buttons to "Show Details"
+                            // Collapse all other details 
                             document.querySelectorAll('.details').forEach(function(div) {
                                 div.style.display = 'none';
                             });
                             document.querySelectorAll('.toggle-details').forEach(function(button) {
-                                button.textContent = 'Show Details';
+                                button.textContent = 'Toggle Details';
                             });
                         
                             // Toggle the current card's details
                             if (isCurrentlyOpen) {
                                 detailsDiv.style.display = 'none'; // Hide current details
-                                toggleButton.textContent = 'Show Details'; // Change button text back to "Show Details"
+                                toggleButton.textContent = 'Toggle Details'; 
                                 resetMarkerToRed(marker); // Set marker back to red when the card is closed
                             } else {
                                 detailsDiv.style.display = 'block'; // Show current details
-                                toggleButton.textContent = 'Hide Details'; // Change button text to "Hide Details"
+                                toggleButton.textContent = 'Toggle Details'; // Change button text to "Hide Details"
                                 fetchAdditionalDetails(place.place_id, detailsDiv, place.name);
                                 setActiveMarker(marker, index); // Set marker to blue
                         
