@@ -8,7 +8,11 @@ Refinable Search Results: Filter restaurant options by distance, rating, and mor
 
 Interactive Map: A large map allows users to see restaurant locations at a glance and explore new options in their area.
 
-User Favorites: Registered users can save their favorite restaurants for easy access.
+User Favorites: Registered users can save their favorite restaurants for easy access, accessible even after logging out.
+
+Restaurant Details: View restaurant address, contact info, cuisine type, ratings, and reviews.
+
+Password Reset: Easily reset your password if forgotten.
 
 **Project Links**
 
@@ -21,7 +25,7 @@ Team Website:
 This website showcases the features and overall design of the Food Finder app.
 
 GitHub Repository:
-[GitHub Repository](https://github.com/Blance5/CS2340-Project-1/tree/David2)
+[GitHub Repository](https://github.com/Blance5/CS2340-Project-1/tree/main)
 The GitHub repo contains all source code for the project, including backend, frontend, and API integration work.
 Getting Started
 
@@ -37,9 +41,9 @@ Django 4.x
 
 Benjamin Lance (Scrum Master, Back-End Developer)
 
-Leo Hollingworth (Product Owner, Full-Stack Developer)
+Leo Hollingworth (Product Owner, Front-End Developer)
 
-David Izadi (Front-End Developer)
+David Izadi (Full-Stack Developer)
 
 Blake Alford (Front-End Developer)
 
