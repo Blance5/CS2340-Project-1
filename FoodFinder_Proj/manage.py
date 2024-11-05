@@ -7,7 +7,7 @@ import sys
 def main():
     """Run administrative tasks."""
     # manage.py
-    os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'FoodFinder_Proj.settings')
+    os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'FoodFinder_Proj.FoodFinder_Proj.settings')
     try:
         from django.core.management import execute_from_command_line
     except ImportError as exc:
