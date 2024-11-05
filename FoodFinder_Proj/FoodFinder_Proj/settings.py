@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'FoodFinder',
+    'FoodFinder_Proj.FoodFinder',
     'django.contrib.sites',
     'allauth',
     'allauth.account',
@@ -128,7 +129,7 @@ INTERNAL_IPS = [
     '127.0.0.1',
 ]
 
-ROOT_URLCONF = 'FoodFinder.urls'
+ROOT_URLCONF = 'FoodFinder_Proj.FoodFinder_Proj.urls'
 
 TEMPLATES = [
     {

@@ -7,10 +7,10 @@ from FoodFinder.views import CustomLogoutView  # Import the custom logout view
 
 urlpatterns = [
     path('admin/', admin.site.urls),  # Admin panel
-    path('', home_view, name='home'),  # Home page view
     path('accounts/', include('allauth.urls')),  # Include allauth URLs for authentication
     path('accounts/logout/', CustomLogoutView.as_view(), name='account_logout'),  # Custom logout view
     path('profile/', profile_view, name='profile'),  # New profile URL
+    path('', home_view, name='home'),  # Home page view
 
 ]
 
