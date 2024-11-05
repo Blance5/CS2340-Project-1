@@ -1,1 +1,1 @@
-web: gunicorn FoodFinder_Proj.wsgi:application
+web: gunicorn FoodFinder_Proj.FoodFinder_Proj.wsgi:application
