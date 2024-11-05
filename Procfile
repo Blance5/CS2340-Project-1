@@ -1,0 +1,1 @@
+web: gunicorn FoodFinder_Proj.wsgi:application
