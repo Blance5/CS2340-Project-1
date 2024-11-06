@@ -102,7 +102,7 @@ class CustomEmailView(EmailView):
     template_name = 'allauth/account/email.html'
 
 
-class CustomLogoutView(TemplateView):
+class CustomLogoutView(LogoutView):
     template_name = 'account/logout.html'
 
     def get(self, request, *args, **kwargs):
