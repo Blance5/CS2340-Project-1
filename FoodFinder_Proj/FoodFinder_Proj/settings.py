@@ -128,7 +128,7 @@ INTERNAL_IPS = [
     '127.0.0.1',
 ]
 
-ROOT_URLCONF = 'FoodFinder_Proj.FoodFinder_Proj.urls'
+ROOT_URLCONF = 'FoodFinder_Proj.urls'
 
 TEMPLATES = [
     {
