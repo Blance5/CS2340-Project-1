@@ -34,6 +34,11 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
+CSRF_TRUSTED_ORIGINS = [
+    'https://food-finder-app.org',
+    'https://www.food-finder-app.org'
+]
+
 
 # Application definition
 
