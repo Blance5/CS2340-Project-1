@@ -11,7 +11,7 @@ urlpatterns = [
     path('accounts/', include('allauth.urls')),  # Include allauth URLs for authentication
     path('accounts/logout/', CustomLogoutView.as_view(), name='account_logout'),  # Custom logout view
     path('profile/', profile_view, name='profile'),  # New profile URL
-    path('', include('FoodFinder_Proj.FoodFinder.urls')),
+    path('', include('FoodFinder.urls')),
 
 ]
 
