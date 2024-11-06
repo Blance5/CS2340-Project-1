@@ -3,7 +3,7 @@ from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
 from FoodFinder_Proj.FoodFinder.views import home_redirect
-from FoodFinder.views import CustomLogoutView  # Import the custom logout view
+from FoodFinder_Proj.FoodFinder.views import CustomLogoutView  # Import the custom logout view
 
 urlpatterns = [
     path('admin/', admin.site.urls),  # Admin panel
