@@ -31,7 +31,7 @@ SECRET_KEY = 'django-insecure-9eqy%x_b74xfj9%s^y-^3_6gr)ep5nt*a-m$6fcr+-i)8x7-il
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
-SECURE_SSL_REDIRECT = True  # Redirect all HTTP requests to HTTPS
+SECURE_SSL_REDIRECT = False  # Redirect all HTTP requests to HTTPS
 CSRF_TRUSTED_ORIGINS = ['https://food-finder-app.org']
 SESSION_COOKIE_SECURE = True
 CSRF_COOKIE_SECURE = True
