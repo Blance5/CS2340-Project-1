@@ -44,7 +44,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'FoodFinder_Proj.FoodFinder',
+    'FoodFinder',
     'django.contrib.sites',
     'allauth',
     'allauth.account',
