@@ -19,8 +19,7 @@ from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib.auth.views import LogoutView
-from FoodFinder_Proj.FoodFinder import views
-
+from FoodFinder import views
 from .views import CustomLogoutView, profile_view
 
 
