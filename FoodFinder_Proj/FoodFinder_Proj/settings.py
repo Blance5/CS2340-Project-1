@@ -36,9 +36,11 @@ CSRF_TRUSTED_ORIGINS = ['https://food-finder-app.org']
 SESSION_COOKIE_SECURE = True
 CSRF_COOKIE_SECURE = True
 ACCOUNT_DEFAULT_HTTP_PROTOCOL = "https"
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['food-finder-app.org', 'www.food-finder-app.org']
+
 
 CSRF_TRUSTED_ORIGINS = [
     'https://food-finder-app.org',
